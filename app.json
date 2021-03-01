@@ -1,0 +1,12 @@
+{
+  "name": "Eurovelo",
+  "displayName": "Eurovelo",
+  "expo": {
+    "name": "Eurovelo",
+    "slug": "Eurovelo",
+    "version": "1.0.0",
+    "assetBundlePatterns": [
+      "**/*"
+    ]
+  }
+}
