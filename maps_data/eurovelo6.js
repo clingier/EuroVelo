@@ -1,4 +1,4 @@
-export default function getRoad() { return [
+export default function getRoad6() { return [
     {latitude:44.116081, longitude:27.812588},
     {latitude:44.11512, longitude:27.816633},
     {latitude:44.114174, longitude:27.820034},
