@@ -1,13 +1,14 @@
-import React from 'react'
+import React, {Component} from 'react'
 import { useState } from 'react'
-import {StyleSheet, Text, View, Dimensions, Alert} from 'react-native'
-import MapView, { Polyline } from 'react-native-maps'
+import {StyleSheet, Text, View, Dimensions, Alert, TouchableOpacity} from 'react-native'
+import MapView, { Polyline, Marker } from 'react-native-maps'
 import getRoad1 from '../../../maps_data/eurovelo1'
 import getRoad2 from '../../../maps_data/eurovelo2'
 import getRoad3 from '../../../maps_data/eurovelo3'
 import getRoad4 from '../../../maps_data/eurovelo4'
 import getRoad5 from '../../../maps_data/eurovelo5'
 import getRoad6 from '../../../maps_data/eurovelo6'
+
 import getRoad7 from '../../../maps_data/eurovelo7'
 import getRoad8 from '../../../maps_data/eurovelo8'
 import getRoad9 from '../../../maps_data/eurovelo9'
@@ -36,6 +37,24 @@ const styles = StyleSheet.create({
 
 
 const HomeScreen = (props) => {
+
+  let [state, setState] = useState({
+    latitude : 0,
+    longitude : 0
+  });
+
+  //let findCoordinates;
+  const findCoordinates = () =>{
+    navigator.geolocation.getCurrentPosition(
+        position => {
+          //const location = JSON.stringify(position);
+
+          setState({latitude: position.coords.latitude, longitude: position.coords.longitude});
+        },
+        error => Alert.alert(error.message),
+        {enableHighAccuracy: true, timeout: 20000, maximumAge: 1000}
+    );
+  }
   const road1 = getRoad1()
   const [width1, setWidth1] = useState({
     strokeColor : 'black',
@@ -44,7 +63,7 @@ const HomeScreen = (props) => {
 
   const road2 = getRoad2()
   const [width2, setWidth2] = useState({
-    strokeColor : 'brown',
+    strokeColor : 'yellow',
     width : 2
   })
 
@@ -66,17 +85,26 @@ const HomeScreen = (props) => {
     width : 2
   })
 
-  return (
-      <View>
-          <MapView style={styles.map}>
+      return (
+          <View>
+            <TouchableOpacity onPress={findCoordinates()}>
+            </TouchableOpacity>
+            <MapView style={styles.map} region={{latitude: state.latitude, longitude: state.longitude, latitudeDelta: 0.015,
+            longitudeDelta: 0.0121}}>
+
+              <Marker
+                coordinate={{latitude: state.latitude, longitude: state.longitude}}
+                pinColor = {"red"}
+                />
               <Polyline coordinates={road1} strokeWidth={width1.width} strokeColor={width1.strokeColor}/>
               <Polyline coordinates={road2} strokeWidth={width2.width} strokeColor={width2.strokeColor}/>
               <Polyline coordinates={road3} strokeWidth={width3.width} strokeColor={width3.strokeColor}/>
               <Polyline coordinates={road4} strokeWidth={width4.width} strokeColor={width4.strokeColor}/>
               <Polyline coordinates={road5} strokeWidth={width5.width} strokeColor={width5.strokeColor}/>
-          </MapView>
-      </View>
-  )
-}
+            </MapView>
+          </View>
+      )
+  }
+
 
 export default HomeScreen;
