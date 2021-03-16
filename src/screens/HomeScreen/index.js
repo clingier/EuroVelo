@@ -7,19 +7,18 @@ import getRoad2 from '../../../maps_data/eurovelo2'
 import getRoad3 from '../../../maps_data/eurovelo3'
 import getRoad4 from '../../../maps_data/eurovelo4'
 import getRoad5 from '../../../maps_data/eurovelo5'
-import getRoad6 from '../../../maps_data/eurovelo6'
-
-import getRoad7 from '../../../maps_data/eurovelo7'
-import getRoad8 from '../../../maps_data/eurovelo8'
-import getRoad9 from '../../../maps_data/eurovelo9'
-import getRoad10 from '../../../maps_data/eurovelo10'
-import getRoad11 from '../../../maps_data/eurovelo11'
-import getRoad12 from '../../../maps_data/eurovelo12'
-import getRoad13 from '../../../maps_data/eurovelo13'
-import getRoad14 from '../../../maps_data/eurovelo14'
-import getRoad15 from '../../../maps_data/eurovelo15'
-import getRoad17 from '../../../maps_data/eurovelo17'
-import getRoad19 from '../../../maps_data/eurovelo19'
+// import getRoad6 from '../../../maps_data/eurovelo6'
+// import getRoad7 from '../../../maps_data/eurovelo7'
+// import getRoad8 from '../../../maps_data/eurovelo8'
+// import getRoad9 from '../../../maps_data/eurovelo9'
+// import getRoad10 from '../../../maps_data/eurovelo10'
+// import getRoad11 from '../../../maps_data/eurovelo11'
+// import getRoad12 from '../../../maps_data/eurovelo12'
+// import getRoad13 from '../../../maps_data/eurovelo13'
+// import getRoad14 from '../../../maps_data/eurovelo14'
+// import getRoad15 from '../../../maps_data/eurovelo15'
+// import getRoad17 from '../../../maps_data/eurovelo17'
+// import getRoad19 from '../../../maps_data/eurovelo19'
 
 const styles = StyleSheet.create({
   container: {
@@ -55,6 +54,7 @@ const HomeScreen = (props) => {
         {enableHighAccuracy: true, timeout: 20000, maximumAge: 1000}
     );
   }
+
   const road1 = getRoad1()
   const [width1, setWidth1] = useState({
     strokeColor : 'black',
@@ -87,9 +87,9 @@ const HomeScreen = (props) => {
 
       return (
           <View>
-            <TouchableOpacity onPress={findCoordinates()}>
-            </TouchableOpacity>
-            <MapView style={styles.map} region={{latitude: state.latitude, longitude: state.longitude, latitudeDelta: 0.015,
+            {/* <TouchableOpacity onPress={findCoordinates()}>
+            </TouchableOpacity> */}
+            <MapView style={styles.map} initialRegion={{latitude: state.latitude, longitude: state.longitude, latitudeDelta: 0.015,
             longitudeDelta: 0.0121}}>
 
               <Marker
