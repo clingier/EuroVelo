@@ -18,7 +18,8 @@ const Roads = (props) => {
                 <Text style={styles.evView}>1000 km</Text> 
                 </View>
                 </View>
-                </TouchableHighlight>
+            </TouchableHighlight>
+            
                 <View style={styles.scrollElem}>
                 <Image source={pic} style={styles.image}/>
                 <View style={styles.evInfo}>
