@@ -2,6 +2,8 @@ import * as React from 'react';
 // import getRoad from './ev3';
 import HomeScreen from './src/screens/HomeScreen';
 import Roads from './src/screens/Roads';
+import Description from './src/screens/Description';
+
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
@@ -14,6 +16,7 @@ const App = () => {
         <Tab.Navigator>
           <Tab.Screen name="Roads" component={Roads} />
           <Tab.Screen name="Home" component={HomeScreen} />
+          <Tab.Screen name="Description" component={Description} />
         </Tab.Navigator>
       </NavigationContainer>
     </>

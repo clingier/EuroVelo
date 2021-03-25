@@ -87,8 +87,8 @@ const HomeScreen = (props) => {
 
       return (
           <View>
-            {/* <TouchableOpacity onPress={findCoordinates()}>
-            </TouchableOpacity> */}
+            {<TouchableOpacity onPress={findCoordinates()}>
+            </TouchableOpacity> }
             <MapView style={styles.map} initialRegion={{latitude: state.latitude, longitude: state.longitude, latitudeDelta: 0.015,
             longitudeDelta: 0.0121}}>
 
