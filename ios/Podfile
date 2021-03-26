@@ -23,4 +23,8 @@ target 'Eurovelo' do
   #  end
   pod 'react-native-maps', :path => '../node_modules/react-native-maps'
 
+  pod 'react-native-location', :path => '../node_modules/react-native-location'
+
+  pod 'react-native-geolocation', :path => '../node_modules/@react-native-community/geolocation'
+
 end
