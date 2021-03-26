@@ -1,6 +1,6 @@
 import React from 'react';
 import { Platform, Alert, Button, StyleSheet,ScrollView, Image, Text, View} from 'react-native';
-import pic from '../../../assets/ev.jpg'
+import pic from '../../assets/images/ev.jpg';
 import {useState, Component, ImageBackground} from "react-native-web";
 
 

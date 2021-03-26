@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { Alert, Button, StyleSheet,ScrollView, Image, Text, View} from 'react-native';
-import pic from './ev.jpg'
+import pic from '../../assets/images/ev.jpg';
 import { TouchableHighlight } from 'react-native-gesture-handler';
 
 const Roads = (props) => {
