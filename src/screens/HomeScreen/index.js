@@ -8,6 +8,25 @@ import PositionLogo from '../../assets/svg/position.svg';
 import * as Location from 'expo-location';
 import * as Permissions from 'expo-permissions';
 
+import trace1 from '../../assets/maps_data/eurovelo1.json';
+import trace2 from '../../assets/maps_data/eurovelo2.json';
+import trace3 from '../../assets/maps_data/eurovelo3.json';
+import trace4 from '../../assets/maps_data/eurovelo4.json';
+import trace5 from '../../assets/maps_data/eurovelo5.json';
+import trace6 from '../../assets/maps_data/eurovelo6.json';
+import trace7 from '../../assets/maps_data/eurovelo7.json';
+import trace8 from '../../assets/maps_data/eurovelo8.json';
+import trace9 from '../../assets/maps_data/eurovelo9.json';
+import trace10 from '../../assets/maps_data/eurovelo10.json';
+import trace11 from '../../assets/maps_data/eurovelo11.json';
+import trace12 from '../../assets/maps_data/eurovelo12.json';
+import trace13 from '../../assets/maps_data/eurovelo13.json';
+import trace14 from '../../assets/maps_data/eurovelo14.json';
+import trace15 from '../../assets/maps_data/eurovelo15.json';
+import trace17 from '../../assets/maps_data/eurovelo17.json';
+import trace19 from '../../assets/maps_data/eurovelo19.json';
+
+
 const styles = StyleSheet.create({
   container: {
     ...StyleSheet.absoluteFillObject,
@@ -16,8 +35,6 @@ const styles = StyleSheet.create({
   },
   map: {
     ...StyleSheet.absoluteFillObject,
-  },
-  map: {
     width: Dimensions.get('window').width,
     height: Dimensions.get('window').height,
   },
@@ -54,30 +71,80 @@ class HomeScreen extends React.Component {
     this.state = {
       location:null,
       geocode:null,
-      trace: null
+      trace: null,
+      trace_id: null
     };
     this.getLocationAsync.bind(this);
     this.loadTrace.bind(this);
   }
 
-
-  loadTrace = async (path) => {
-      fetch(path, {
-        headers : { 
-          'Content-Type': 'application/json',
-          'Accept': 'application/json'
-         }
-       })
-      .then(function(response){
-        console.log(response)
-        return response.json();
-      })
-      .then((myJson) => {
-        console.log(myJson);
-        this.setState({trace: myJson});
-      });
-    }
+  componentDidMount() {
+    this.setState({trace: null})
+  }
   
+  loadTrace = (name) => {
+    let trace = null;
+    if(name == this.state.trace_id)
+      this.setState({trace: null, trace_id: null})
+    else
+    {
+      switch(name){
+      case 'ev1':
+        trace = trace1
+        break;
+      case 'ev2':
+        trace = trace2
+        break;
+      case 'ev3':
+        trace = trace3
+        break;
+      case 'ev4':
+        trace = trace4
+        break;
+      case 'ev5':
+        trace = trace5
+        break;
+      case 'ev6':
+        trace = trace6
+        break;
+      case 'ev7':
+        trace = trace7
+        break;
+      case 'ev8':
+        trace = trace8
+        break;
+      case 'ev9':
+        trace = trace9
+        break;
+      case 'ev10':
+        trace = trace10
+        break;
+      case 'ev11':
+        trace = trace11
+        break;
+      case 'ev12':
+        trace = trace12
+        break;
+      case 'ev13':
+        trace = trace13
+        break;
+      case 'ev14':
+        trace = trace14
+        break;
+      case 'ev15':
+        trace = trace15
+        break;
+      case 'ev17':
+        trace = trace17
+        break;
+      case 'ev19':
+        trace = trace19
+        break;
+      }
+      this.setState({trace: trace, trace_id: name});
+    }
+  }
+
   getLocationAsync = async () => {
     let { status } = await Permissions.askAsync(Permissions.LOCATION);
     if (status !== 'granted') {
@@ -100,8 +167,6 @@ class HomeScreen extends React.Component {
   }
 
   render(){
-    traceToRender = 'trace' in this.state;
-
     return (
       <View style={styles.container}>
         <MapView 

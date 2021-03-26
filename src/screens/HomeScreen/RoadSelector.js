@@ -26,23 +26,23 @@ class RoadSelector extends React.Component {
     constructor(props) {
         super(props);
         let roads = {
-            'ev1' : '../../assets/maps_data/eurovelo1.json',
-            'ev2' : '../../assets/maps_data/eurovelo2.json',
-            'ev3' : '../../assets/maps_data/eurovelo3.json',
-            'ev4' : '../../assets/maps_data/eurovelo4.json',
-            'ev5' : '../../assets/maps_data/eurovelo5.json',
-            'ev6' : '../../assets/maps_data/eurovelo6.json',
-            'ev7' : '../../assets/maps_data/eurovelo7.json',
-            'ev8' : '../../assets/maps_data/eurovelo8.json',
-            'ev9' : '../../assets/maps_data/eurovelo9.json',
-            'ev10' : '../../assets/maps_data/eurovelo10.json',
-            'ev11' : '../../assets/maps_data/eurovelo11.json',
-            'ev12' : '../../assets/maps_data/eurovelo12.json',
-            'ev13' : '../../assets/maps_data/eurovelo13.json',
-            'ev14' : '../../assets/maps_data/eurovelo14.json',
-            'ev15' : '../../assets/maps_data/eurovelo15.json',
-            'ev17' : '../../assets/maps_data/eurovelo17.json',
-            'ev19' : '../../assets/maps_data/eurovelo19.json',
+            'ev1' : './maps_data/eurovelo1.json',
+            'ev2' : './maps_data/eurovelo2.json',
+            'ev3' : './maps_data/eurovelo3.json',
+            'ev4' : './maps_data/eurovelo4.json',
+            'ev5' : './maps_data/eurovelo5.json',
+            'ev6' : './maps_data/eurovelo6.json',
+            'ev7' : './maps_data/eurovelo7.json',
+            'ev8' : './maps_data/eurovelo8.json',
+            'ev9' : './maps_data/eurovelo9.json',
+            'ev10' : './maps_data/eurovelo10.json',
+            'ev11' : './maps_data/eurovelo11.json',
+            'ev12' : './maps_data/eurovelo12.json',
+            'ev13' : './maps_data/eurovelo13.json',
+            'ev14' : './maps_data/eurovelo14.json',
+            'ev15' : './maps_data/eurovelo15.json',
+            'ev17' : './maps_data/eurovelo17.json',
+            'ev19' : './maps_data/eurovelo19.json',
         }
 
         this.state = { callback: props.callback, roads: roads, active: null }
@@ -54,7 +54,7 @@ class RoadSelector extends React.Component {
             this.setState({active: null})
         else
             this.setState({active: name})
-        this.state.callback(this.state.roads[name]);
+        this.state.callback(name);
     }
 
     render(){
