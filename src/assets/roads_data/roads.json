@@ -2,25 +2,103 @@
     {
         "id": 1,
         "title": "Atlantic Coast Route",
-        "description": "Vita est illis semper in fuga uxoresque mercenariae conductae ad tempus ex pacto atque, ut sit species matrimonii, dotis nomine futura coniunx hastam et tabernaculum offert marito, post statum diem si id elegerit discessura, et incredibile est quo ardore apud eos in venerem uterque solvitur sexus.Adolescebat autem obstinatum propositum erga haec et similia multa scrutanda,stimulos admovente regina,quae abrupte mariti fortunas trudebat in exitium praeceps,cum eum potius lenitate feminea ad veritatis humanitatisque viam reducere utilia suadendo deberet,ut in Gordianorum actibus factitasse Maximini truculenti illius imperatoris rettulimus coniugem.Hacque adfabilitate confisus cum eadem postridie feceris,ut incognitus haerebis et repentinus,hortatore illo hesterno clientes numerando,qui sis vel unde venias diutius ambigente agnitus vero tandem et adscitus in amicitiam si te salutandi adsiduitati dederis triennio indiscretus et per tot dierum defueris tempus,reverteris ad paria perferenda,nec ubi esses interrogatus et quo tandem miser discesseris,aetatem omnem frustra in stipite conteres summittendo.",
-        "length": 1250
+        "description": "Following Europe’s mighty western border, reaching from Scandinavia, to South and Western Portugal, the Atlantic Coast Route visits the majestic fjords of Norway, the wild Irish coastline, the rough cliffs of Brittany and the sun-kissed beaches of Portugal, totalling 11,000 km. Along the way you will not only be seduced by bustling port cities and cosy fishing villages, but you will be impressed by dramatic landscapes and have the chance to enjoy the best seafood each country has to offer.",
+        "length": 11000
     },
     {
         "id": 2,
-        "title": "Atlantic Coast Route",
-        "description": "Vita est illis semper in fuga uxoresque mercenariae conductae ad tempus ex pacto atque, ut sit species matrimonii, dotis nomine futura coniunx hastam et tabernaculum offert marito, post statum diem si id elegerit discessura, et incredibile est quo ardore apud eos in venerem uterque solvitur sexus.Adolescebat autem obstinatum propositum erga haec et similia multa scrutanda,stimulos admovente regina,quae abrupte mariti fortunas trudebat in exitium praeceps,cum eum potius lenitate feminea ad veritatis humanitatisque viam reducere utilia suadendo deberet,ut in Gordianorum actibus factitasse Maximini truculenti illius imperatoris rettulimus coniugem.Hacque adfabilitate confisus cum eadem postridie feceris,ut incognitus haerebis et repentinus,hortatore illo hesterno clientes numerando,qui sis vel unde venias diutius ambigente agnitus vero tandem et adscitus in amicitiam si te salutandi adsiduitati dederis triennio indiscretus et per tot dierum defueris tempus,reverteris ad paria perferenda,nec ubi esses interrogatus et quo tandem miser discesseris,aetatem omnem frustra in stipite conteres summittendo.",
-        "length": 1400
+        "title": "Capitals Route",
+        "description": "VDublin, London, Berlin, Warsaw, Minsk and Moscow: six compelling but different cities that are united by the 5,000 km long Capital Route. You can either start in the welcoming atmosphere of Ireland’s Pubs or with a photo at the awe-inspiring Red Square in Moscow. In between you can combine first class dining, partying and culture in the capitals and other cities along the route, with beautiful scenery such as the untouched Białowieża Forest between Poland and Belarus, or Snowdonia National Park in the UK.",
+        "length": 5000
     },
     {
         "id": 3,
-        "title": "Atlantic Coast Route",
-        "description": "Vita est illis semper in fuga uxoresque mercenariae conductae ad tempus ex pacto atque, ut sit species matrimonii, dotis nomine futura coniunx hastam et tabernaculum offert marito, post statum diem si id elegerit discessura, et incredibile est quo ardore apud eos in venerem uterque solvitur sexus.Adolescebat autem obstinatum propositum erga haec et similia multa scrutanda,stimulos admovente regina,quae abrupte mariti fortunas trudebat in exitium praeceps,cum eum potius lenitate feminea ad veritatis humanitatisque viam reducere utilia suadendo deberet,ut in Gordianorum actibus factitasse Maximini truculenti illius imperatoris rettulimus coniugem.Hacque adfabilitate confisus cum eadem postridie feceris,ut incognitus haerebis et repentinus,hortatore illo hesterno clientes numerando,qui sis vel unde venias diutius ambigente agnitus vero tandem et adscitus in amicitiam si te salutandi adsiduitati dederis triennio indiscretus et per tot dierum defueris tempus,reverteris ad paria perferenda,nec ubi esses interrogatus et quo tandem miser discesseris,aetatem omnem frustra in stipite conteres summittendo.",
-        "length": 500
+        "title": "Pilgrims Route",
+        "description": "Looking for a bit of culture on your next cycle trip, but still want to party? EuroVelo 3 might be the answer. The route will give you a taste of some of Europe’s famous pilgrims routes and along the roughly 5,300 km-long way you will be able to discover some of the continent’s most impressive religious buildings, including the magnificent cathedrals of Cologne, Aachen and Santiago de Compostela. Linking these sites you will pass through many exciting cities famous for their unbeatable nightlife, including Hamburg, Liège and Paris.",
+        "length": 5300
     },
     {
         "id": 4,
-        "title": "Atlantic Coast Route",
-        "description": "Vita est illis semper in fuga uxoresque mercenariae conductae ad tempus ex pacto atque, ut sit species matrimonii, dotis nomine futura coniunx hastam et tabernaculum offert marito, post statum diem si id elegerit discessura, et incredibile est quo ardore apud eos in venerem uterque solvitur sexus.Adolescebat autem obstinatum propositum erga haec et similia multa scrutanda,stimulos admovente regina,quae abrupte mariti fortunas trudebat in exitium praeceps,cum eum potius lenitate feminea ad veritatis humanitatisque viam reducere utilia suadendo deberet,ut in Gordianorum actibus factitasse Maximini truculenti illius imperatoris rettulimus coniugem.Hacque adfabilitate confisus cum eadem postridie feceris,ut incognitus haerebis et repentinus,hortatore illo hesterno clientes numerando,qui sis vel unde venias diutius ambigente agnitus vero tandem et adscitus in amicitiam si te salutandi adsiduitati dederis triennio indiscretus et per tot dierum defueris tempus,reverteris ad paria perferenda,nec ubi esses interrogatus et quo tandem miser discesseris,aetatem omnem frustra in stipite conteres summittendo.",
-        "length": 650
+        "title": "Central Europe Route",
+        "description": "Cycling 5,100 km across Europe from west to east provides a fascinating insight into the world’s second most densely populated continent. Waiting for you are outstanding medieval architecture, dynamic cities and history lessons, and yet you can still get away from the crowds on this route, visiting France’s dramatic northern coastline and by crossing through the fairy tale Bohemian Forest. EuroVelo 4 is so diverse, you won’t know where to begin.",
+        "length": 5100
+    },
+    {
+        "id": 5,
+        "title": "Via Romea (Francigena)",
+        "description": "Over a thousand years ago, pilgrims traveled all the way from England to Rome. After the Eternal City, the route continued to Jerusalem through the port of Brindisi, along the ancient Via Appia. Now, you can follow their footsteps by cycling EuroVelo 5 our 3,200 km version of this legendary route. The route passes through 7 different countries and links both modern and ancient institutions, with many cathedrals, churches, monuments and museums mixing along this route with the major European Institutions in Brussels, Luxembourg, Strasbourg. Whether you want a short break or a long adventure, EuroVelo 5 offers something for everyone!",
+        "length": 3200
+    },
+    {
+        "id": 6,
+        "title": "Atlantic – Black Sea",
+        "description": "Atlantic–Black Sea is one of the most popular EuroVelo routes, and it’s little wonder why. Coasts, rivers, castles, top-class infrastructure and a nice flat topography make this route into every cycle tourists’ dream journey. The famous sections along the Loire and the Danube Rivers are known to cycle tourists around the world, and for good reason. In France you'll taste the best wines after cycling through the vineyards, in Vienna you'll visit the most stunning museums, and in Serbia you'll experience the warmth of the people. Come and see what all the fuss is about!",
+        "length": 4450
+    },
+    {
+        "id": 7,
+        "title": "Sun Route",
+        "description": "Explore Europe from the far North to the sunny South. The approximately 7,700 km of the Sun Route will whisk you from the land of the midnight sun to island hopping in the Mediterranean. Culture, sunlight, mountains and a good dose of history make for an unforgettable adventure. There is so much to do: visiting nine European countries (including stops in the cycling havens of Malmö, Copenhagen, Berlin and Bolzano); tackling the Alps, reaching the tip of the ‘Italian boot’, and experiencing the sunny archipelago of Malta to mention just a few highlights. What are you waiting for?",
+        "length": 7700
+    },
+    {
+        "id": 8,
+        "title": "Mediterranean Route",
+        "description": "Sparkling emerald seas, kilometres of golden sand, mysterious islands, wonderful food, ancient cities… It isn’t hard to find convincing reasons to travel along the Mediterranean! What better way to do it than by bike? Admire Granada’s Alhambra, or Gaudi’s mind blowing architecture in Barcelona, feel the romance of Venice’s canals, Dubrovnik’s old town, or pull your bike up alongside a waiting beach, inviting you to just relax. While EuroVelo 8 connects many already popular tourist destinations, there are still lots of undiscovered gems to be found along the way. So what are you waiting for? Get on your bike!",
+        "length": 7500
+    },
+    {
+        "id": 9,
+        "title": "Baltic – Adriatic",
+        "description": "With its 2,050 km, EuroVelo 9 - Baltic-Adriatic may not be the longest EuroVelo route but it doesn't mean that this route does not have a lot to offer. Rivers, seas and mountains are on the checklist, and EuroVelo 9 is packed full of adventures over its (relatively!) short distance. Start with a refreshing ride on the Baltic coast and finish the trip with a relaxing swim in the Adriatic Sea. In between you can enjoy welcoming local communities with exquisite culinary traditions in Poland, Czechia, Austria, Slovenia, Italy and Croatia. This route is sometimes called the Amber Route as historically the precious stone amber, found in the Baltic region, was taken by routes such as this to the Mediterranean Sea!",
+        "length": 2050
+    },
+    {
+        "id": 10,
+        "title": "Baltic Sea Cycle Route",
+        "description": "The coastline of the Baltic Sea takes in beaches, cliffs, woodland, ports and marinas as well as thousands of islands large and small. It passes through the different cultures that have grown up along the shores . It is an attractive destination and EuroVelo 10 will give you the perfect opportunity to get better acquainted with this corner of Europe. Five beguiling capital cities; glamorous Saint Petersburg and Hanseatic towns like Gdansk and Lübeck provide lots of cultural highlights. In between, you will have a unique opportunity to get back to nature exploring the seashore.",
+        "length": 9000
+    },
+    {
+        "id": 11,
+        "title": "East Europe Route",
+        "description": "Labelled by some bicycle tourists as the ‘Beast of the East’, this lengthy route with its 6,550 km stretches from the north-east tip of Norway all the way down to sunny Greece. EuroVelo 11 will lead you through six extremely different capital cities: hip Helsinki, charming Vilnius, the ‘Phoenix City’ of Warsaw, the ‘White City’ of Belgrade, exciting Skopje and, last but not least, enchanting ancient Athens. Give it a go and discover a new favourite destination!",
+        "length": 6550
+    },
+    {
+        "id": 12,
+        "title": "North Sea Cycle Route",
+        "description": "The North Sea Cycle Route will surprise you with its diversity. Although bordering the same sea it goes from land located below sea level (in the Netherlands) to cliffs over 1,000 meters in height (Norway). You can sample wee drams in Scotland; pedal along the well maintained cycle paths of Denmark; dance the night away in millennial port cities such as Gothenburg or Hamburg; or stretch out on the inviting beaches of the Netherlands. Expect to be pleasantly surprised along this popular bicycle route which is about 7,050 km long. And don’t forget to check the ferry timetables!",
+        "length": 7050
+    },
+    {
+        "id": 13,
+        "title": "Iron Curtain Trail",
+        "description": "Experiencing the history of Europe's division! For almost half a century, Europe was forcibly divided into East and West. EuroVelo 13 retraces this ‘Iron Curtain’, a border stretching from the Barents Sea to the Black Sea. Following this route for more than 9,950 km is a living history lesson but also provides a welcome reminder of the peace and reconciliation that have followed the fall of the ‘Curtain’. As the longest EuroVelo route, the Iron Curtain Trail has something to offer every type of cycle tourist, from the vineyards in southern Czechia and northern Austria to the mountainous border of Bulgaria and Greece; and from the bustling ports of the Baltic States to the stark beauty of Lapland. The Iron Curtain Trail has received significant support from the European Institutions over the years. Back in 2005, the European Parliament recognised the ‘Iron Curtain Trail’ as a model project for sustainable tourism and called upon the Member States for support. This was an initiative of Green MEP Michael Cramer who had previously established the Berlin Wall Trail in the German capital. Michael is still actively involved in the development of EuroVelo 13 – Iron Certain Trail. For more information, including a database of news articles linked to the route, please visit his website: www.michael-cramer.eu (in German).",
+        "length": 9950
+    },
+    {
+        "id": 14,
+        "title": "Waters of Central Europe",
+        "description": "Crossing Austria and Hungary, EuroVelo 14 provides an important east–west link and connects to the EuroVelo routes 7, 9 and 13. The route’s name refers to the fact that it connects several important waterways – rivers, lakes and spas – located in central Europe. Indeed, the theme is arguably stronger when experienced on the route as it becomes apparent just how much of the itinerary is located close to water. EuroVelo 14 connects some beautiful landscapes and also provides a great cycling adventure for those that want to travel longer distances. Additionally, the route is very well served by train services.",
+        "length": 1125
+    },
+    {
+        "id": 15,
+        "title": "Rhine Cycle Route",
+        "description": "Suitable for cyclists of all fitness levels and abilities, the Rhine Cycle Route runs along one of the longest rivers in Europe from the Swiss Alps to the North Sea. The Rhine has fostered a cultural and economic dialogue between the Alpine regions and Northern Europe for over 2,000 years. Explore the beauty of this river landscape and the picturesque towns and villages lining its banks. \"The Rhine combines every quality a river can exhibit. The rapidity of the Rhone, the breadth of the Loire, the rocks of the Meuse, the sinuosity of the Seine, the translucency of the Somme, the historical reminiscences of the Tiber, the regal dignity of the Danube, the mysterious influence of the Nile, the golden sands of the glittering streams of the New World, the phantoms of some Asiatic stream\" - Victor Hugo.",
+        "length": 1500
+    },
+    {
+        "id": 17,
+        "title": "Rhone Cycle Route",
+        "description": "The charming alpine village of Andermatt in Switzerland is not only the starting point of EuroVelo 15 but also marks the beginning of EuroVelo 17 - Rhone Cycle Route. Following the course of the River Rhone, the route ends over a 1,250 km later on the beautiful Mediterranean coast of France. Connecting the Alps, Lake Geneva, the lavender fields of Provence and the wild white horses of the Camargue, the shortest EuroVelo route packs in a surprising amount of different cultures, landscapes and experiences.",
+        "length": 1250
+    },
+    {
+        "id": 19,
+        "title": "Meuse Cycle Route",
+        "description": "The Meuse Cycle Route follows one of the most important rivers in Europe and welcomes cyclists of all levels! From the plateau of Langres via Hoek van Holland to Rotterdam, step on your bike and discover 3 countries (France, Belgium and Netherlands) by cycling over 1,050 kilometers of marked roads. This attractive and varied route offers ever-changing scenery, with charming towns and villages on both banks of the river, plus there are plenty of cultural heritage sites and culinary treasures from beginning to end.",
+        "length": 1050
     }
 ]
