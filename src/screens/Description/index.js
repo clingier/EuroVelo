@@ -6,7 +6,7 @@ import {TouchableHighlight} from "react-native-gesture-handler";
 
 
 const Description = ({navigation, route}) => {
-    if (typeof props === "undefined")
+    if (typeof route.params === "undefined")
         return (
             <View style={[styles.container, {}]}>
                 <Image style={{width: '100%', height: '35%'}} source={pic}/>
