@@ -3,58 +3,61 @@ import { Alert, Button, StyleSheet,ScrollView, Image, Text, View} from 'react-na
 import pic from '../../assets/images/ev.jpg';
 import { TouchableHighlight } from 'react-native-gesture-handler';
 
-const Roads = (props) => {
+const Roads = ({navigation}) => {
     return (
         <View style={styles.container}>
         <Text style={styles.title}>Eurovelo</Text>
         <View style={styles.separator} lightColor="#eee" darkColor="rgba(255,255,255,0.1)" />
         <ScrollView>
-    
-            <TouchableHighlight onPress={()=>Alert.alert("Test")}>
+
+            <TouchableHighlight onPress={()=> navigation.navigate('Description', {number: '1'})}>
                 <View style={styles.scrollElem}>
                 <Image source={pic} style={styles.image}/>
                 <View style={styles.evInfo}>
                 <Text style={styles.evView}>EV1</Text>
-                <Text style={styles.evView}>1000 km</Text> 
+                <Text style={styles.evView}>1000 km</Text>
                 </View>
                 </View>
             </TouchableHighlight>
-            
+
+            <TouchableHighlight onPress={()=> navigation.navigate('Description', {number: '2'})}>
+                <View style={styles.scrollElem}>
+                <Image source={pic} style={styles.image}/>
+                <View style={styles.evInfo}>
+                <Text style={styles.evView}>EV2</Text>
+                <Text style={styles.evView}>1000 km</Text>
+                </View>
+                </View>
+            </TouchableHighlight>
+
+
+            <View style={styles.scrollElem}>
+                <Image source={pic} style={styles.image}/>
+                <View style={styles.evInfo}>
+                <Text style={styles.evView}>EV1</Text>
+                <Text style={styles.evView}>1000 km</Text>
+                </View>
+                </View>
+
                 <View style={styles.scrollElem}>
                 <Image source={pic} style={styles.image}/>
                 <View style={styles.evInfo}>
                 <Text style={styles.evView}>EV1</Text>
-                <Text style={styles.evView}>1000 km</Text> 
+                <Text style={styles.evView}>1000 km</Text>
                 </View>
                 </View>
-    
+
                 <View style={styles.scrollElem}>
                 <Image source={pic} style={styles.image}/>
                 <View style={styles.evInfo}>
                 <Text style={styles.evView}>EV1</Text>
-                <Text style={styles.evView}>1000 km</Text> 
-                </View>
-                </View>
-    
-                <View style={styles.scrollElem}>
-                <Image source={pic} style={styles.image}/>
-                <View style={styles.evInfo}>
-                <Text style={styles.evView}>EV1</Text>
-                <Text style={styles.evView}>1000 km</Text> 
-                </View>
-                </View>
-    
-                <View style={styles.scrollElem}>
-                <Image source={pic} style={styles.image}/>
-                <View style={styles.evInfo}>
-                <Text style={styles.evView}>EV1</Text>
-                <Text style={styles.evView}>1000 km</Text> 
+                <Text style={styles.evView}>1000 km</Text>
                 </View>
                 </View>
         </ScrollView>
         </View>)
 }
-    
+
     const styles = StyleSheet.create({
         container: {
           flex: 1,
@@ -75,14 +78,14 @@ const Roads = (props) => {
         },
         scrollElem : {
           justifyContent : 'center'
-      
+
         },
 
         image : {
           height : 200,
           width : 400,
-          
-        }, 
+
+        },
 
         evInfo :  {
           paddingTop:10,
@@ -99,6 +102,5 @@ const Roads = (props) => {
           paddingRight : 80,
         }
       });
-  
+
   export default Roads;
-  

@@ -4,7 +4,7 @@ import pic from '../../assets/images/ev.jpg';
 import {useState, Component, ImageBackground} from "react-native-web";
 
 
-function Description(props) {
+const Description = ({navigation, route}) => {
     return (
         <View style={[styles.container, {
             // Try setting `flexDirection` to `"row"`.
@@ -13,10 +13,9 @@ function Description(props) {
             <Image style={{width: '100%', height: '35%'}} source={pic}/>
             <ScrollView>
 
-                <View style={styles.separator} lightColor="#eee" darkColor="rgba(255,255,255,0.1)"/>
                 <View style={{flex: 1, backgroundColor: "white"}}>
                     <Text style={styles.routeText}>
-                        {"Route 1"}
+                        Route {route.params.number}
                     </Text>
                     <Text style={styles.titleText}>
                         {"Atlantic Coast Route"}
