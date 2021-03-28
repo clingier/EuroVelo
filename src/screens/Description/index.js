@@ -2,14 +2,23 @@ import React from 'react';
 import {Platform, Alert, Button, StyleSheet, ScrollView, Image, Text, View} from 'react-native';
 import pic from '../../assets/images/ev.jpg';
 import {useState, Component, ImageBackground} from "react-native-web";
+import {TouchableHighlight} from "react-native-gesture-handler";
 
 
 const Description = ({navigation, route}) => {
-    return (
-        <View style={[styles.container, {
-            // Try setting `flexDirection` to `"row"`.
-            //flexDirection: "column"
-        }]}>
+    if (typeof props === "undefined")
+        return (
+            <View style={[styles.container, {}]}>
+                <Image style={{width: '100%', height: '35%'}} source={pic}/>
+                <View style={{flex: 1, backgroundColor: "white"}}>
+                    <Text style={styles.titleText}>
+                        Please select a route
+                    </Text>
+                </View>
+            </View>
+        );
+    else return (
+        <View style={[styles.container, {}]}>
             <Image style={{width: '100%', height: '35%'}} source={pic}/>
             <ScrollView>
 
@@ -29,6 +38,16 @@ const Description = ({navigation, route}) => {
                         "Hacque adfabilitate confisus cum eadem postridie feceris, ut incognitus haerebis et repentinus, hortatore illo hesterno clientes numerando, qui sis vel unde venias diutius ambigente agnitus vero tandem et adscitus in amicitiam si te salutandi adsiduitati dederis triennio indiscretus et per tot dierum defueris tempus, reverteris ad paria perferenda, nec ubi esses interrogatus et quo tandem miser discesseris, aetatem omnem frustra in stipite conteres summittendo."}
                     </Text>
                 </View>
+
+
+                <TouchableHighlight
+                    onPress={() => navigation.navigate('Home')}>
+                    <View style={styles.scrollElem}>
+                        <View style={styles.evInfo}>
+                            <Text style={styles.evView}>Go to map</Text>
+                        </View>
+                    </View>
+                </TouchableHighlight>
             </ScrollView>
         </View>
 

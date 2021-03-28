@@ -17,9 +17,6 @@ const styles = StyleSheet.create({
     active: {
         backgroundColor: "#2FD175"
     },
-    buttonText: {
-        color: "white"
-    },
 })
 
 class RoadSelector extends React.Component {
@@ -60,7 +57,7 @@ class RoadSelector extends React.Component {
     render(){
         const roadbutton = (name) => {
             return (
-            <TouchableOpacity 
+            <TouchableOpacity
             style={(name == this.state.active) ? [styles.button, styles.active] : styles.button}
             onPress={() => {this.changeActive(name)}}>
                 <Text
@@ -70,7 +67,7 @@ class RoadSelector extends React.Component {
                 </Text>
             </TouchableOpacity>)
         }
-        
+
         const roadnames = Object.keys(this.state.roads);
 
         return (
