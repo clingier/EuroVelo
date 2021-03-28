@@ -18,7 +18,7 @@ const Description = ({navigation, route}) => {
                         Route {route.params.number}
                     </Text>
                     <Text style={styles.titleText}>
-                        {"Atlantic Coast Route"}
+                        {route.params.name}
                     </Text>
 
                     <Text style={styles.description}>
