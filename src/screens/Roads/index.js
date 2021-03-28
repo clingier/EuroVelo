@@ -4,17 +4,21 @@ import pic from '../../assets/images/ev.jpg';
 import {TouchableHighlight} from 'react-native-gesture-handler';
 
 const Buttons = ({navigation}) => {
+    const names = ['Atlantic Coast Route', 'Capitals Route', 'Pilgrims Route', 'Central Europe Route',
+        'Via Romea Francigena', 'River Route', 'Sun Route', 'Mediterranean Route', 'Amber Route', 'Baltic Route',
+        'East Europe Route', 'North Sea Route', 'Iron Curtain Trail', 'Waters of Central Europe',
+        'The Rhine Cycle Route', 'n/a', 'Rhone Cycle Road', 'n/a', 'Meuse Cycle Route'];
     const buttons = [];
     for (let i = 1; i <= 19; i++) {
         if (i === 16 || i === 18) continue;
         buttons.push(
             <TouchableHighlight
-                onPress={() => navigation.navigate('Description', {number: i, name: 'Atlantic Coast Route'})}>
+                onPress={() => navigation.navigate('Description', {number: i, name: names[i-1]})}>
                 <View style={styles.scrollElem}>
                     <Image source={pic} style={styles.image}/>
                     <View style={styles.evInfo}>
-                        <Text style={styles.evView}>EV{i}</Text>
-                        <Text style={styles.evView}>1000 km</Text>
+                        <Text style={styles.evView}>EV {i}</Text>
+                        <Text style={styles.evView}>1500 km</Text>
                     </View>
                 </View>
             </TouchableHighlight>
