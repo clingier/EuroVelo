@@ -20,7 +20,7 @@ function Roads() {
     );
 }
 
-function App() {
+export default function App() {
     return (
         <NavigationContainer>
             <Tab.Navigator>
@@ -30,5 +30,3 @@ function App() {
         </NavigationContainer>
     );
 }
-
-export default App
