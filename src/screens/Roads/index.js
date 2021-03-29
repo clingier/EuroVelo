@@ -30,6 +30,7 @@ const Buttons = ({navigation}) => {
         if (i === 16 || i === 18) continue;
         buttons.push(
             <TouchableHighlight
+                key = {i}
                 onPress={() => navigation.navigate('Description', {number: i, name: roads[i]})}>
                 <View style={styles.scrollElem}>
                     <Image source={pic} style={styles.image}/>
