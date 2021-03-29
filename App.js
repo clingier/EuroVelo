@@ -1,28 +1,34 @@
 import * as React from 'react';
 // import getRoad from './ev3';
 import HomeScreen from './src/screens/HomeScreen';
-import Roads from './src/screens/Roads';
+import RoadsScreen from './src/screens/RoadsScreen';
 import Description from './src/screens/Description';
 
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import {createStackNavigator} from "@react-navigation/stack";
 
 const Tab = createBottomTabNavigator();
+const Stack = createStackNavigator();
 
-const App = () => {
-  return(
-    <>
-      <NavigationContainer>
-        <Tab.Navigator>
-          <Tab.Screen name="Roads" component={Roads} />
-          <Tab.Screen name="Home" component={HomeScreen} />
-          <Tab.Screen name="Description" component={Description} />
-        </Tab.Navigator>
-      </NavigationContainer>
-    </>
-  );
-};
+function Roads() {
+    return (
+        <Stack.Navigator>
+            <Stack.Screen name="Roads" component={RoadsScreen} />
+            <Stack.Screen name="Description" component={Description} />
+        </Stack.Navigator>
+    );
+}
 
-
+function App() {
+    return (
+        <NavigationContainer>
+            <Tab.Navigator>
+                <Tab.Screen name="Map" component={HomeScreen} />
+                <Tab.Screen name="Roads" component={Roads} />
+            </Tab.Navigator>
+        </NavigationContainer>
+    );
+}
 
 export default App
