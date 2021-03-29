@@ -2,45 +2,28 @@ import * as React from 'react';
 import {Alert, Button, StyleSheet, ScrollView, Image, Text, View} from 'react-native';
 import pic from '../../assets/images/ev.jpg';
 import {TouchableHighlight} from 'react-native-gesture-handler';
+import routes from '../../assets/roads_data/roads.json';
 
 const Buttons = ({navigation}) => {
-    let roads = {
-        1 : 'Atlantic Coast Route',
-        2 : 'Capitals Route',
-        3 : 'Pilgrims Route',
-        4 : 'Central Europe Route',
-        5 : 'Via Romea Francigena',
-        6 : 'River Route',
-        7 : 'Sun Route',
-        8 : 'Mediterranean Route',
-        9 : 'Amber Route',
-        10 : 'Baltic Route',
-        11 : 'East Europe Route',
-        12 : 'North Sea Route',
-        13 : 'Iron Curtain Trail',
-        14 : 'Waters of Central Europe',
-        15 : 'The Rhine Cycle Route',
-        16 : 'n/a',
-        17 : 'Rhone Cycle Road',
-        18 : 'n/a',
-        19 : 'Meuse Cycle Route',
-    }
     const buttons = [];
-    for (let i = 1; i <= 19; i++) {
-        if (i === 16 || i === 18) continue;
+    for (let i = 0; i < 17; i++) {
         buttons.push(
             <TouchableHighlight
-                key = {i}
-                onPress={() => navigation.navigate('Description', {number: i, name: roads[i]})}>
+                key={i}
+                onPress={() => navigation.navigate('Description', {
+                    number: routes[i].id,
+                    name: routes[i].title,
+                    description: routes[i].description
+                })}>
                 <View style={styles.scrollElem}>
                     <Image source={pic} style={styles.image}/>
                     <View style={styles.evInfo}>
-                        <Text style={styles.evView}>EV {i}</Text>
-                        <Text style={styles.evView}>1500 km</Text>
+                        <Text style={styles.evView}>EV {routes[i].id}</Text>
+                        <Text style={styles.evView}>{routes[i].length} km</Text>
                     </View>
                 </View>
             </TouchableHighlight>
-        )
+        );
     }
     return buttons;
 }
