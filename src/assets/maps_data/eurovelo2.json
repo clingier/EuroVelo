@@ -1,4 +1,5 @@
-[
+{
+    "0": [
     {"latitude":53.428, "longitude":-7.93176},
     {"latitude":53.42778, "longitude":-7.93009},
     {"latitude":53.42748, "longitude":-7.92829},
@@ -39297,3 +39298,4 @@
     {"latitude":52.66901, "longitude":23.8568},
     {"latitude":52.669, "longitude":23.85692},
     {"latitude":52.66895, "longitude":23.85713}]
+}
