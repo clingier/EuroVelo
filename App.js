@@ -1,5 +1,4 @@
 import * as React from 'react';
-// import getRoad from './ev3';
 import HomeScreen from './src/screens/HomeScreen';
 import RoadsScreen from './src/screens/RoadsScreen';
 import Description from './src/screens/Description';
@@ -20,13 +19,22 @@ function Roads() {
     );
 }
 
-export default function App() {
+export default class App extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      trace_db: props.trace_db,
+    };
+  }
+  
+  render() {
     return (
         <NavigationContainer>
             <Tab.Navigator>
-                <Tab.Screen name="Map" component={HomeScreen} />
+                <Tab.Screen name="Map">{() => <HomeScreen trace_db={this.state.trace_db} />}</Tab.Screen>
                 <Tab.Screen name="Roads" component={Roads} />
             </Tab.Navigator>
         </NavigationContainer>
     );
+  }
 }
