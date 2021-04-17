@@ -24,7 +24,12 @@
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#FFFFFF"
       },
-      "package": "com.clingier.EuroVelo"
+      "package": "com.clingier.EuroVelo",
+      "config": {
+        "googleMaps": {
+          "apiKey": "AIzaSyBBYchmKMPiCDleqTH59wT7Xws4e6VU_AI"
+        }
+      }
     },
     "web": {
       "favicon": "./assets/favicon.png"
