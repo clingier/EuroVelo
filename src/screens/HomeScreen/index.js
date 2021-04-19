@@ -67,7 +67,7 @@ class HomeScreen extends React.Component {
 
     loadTrace = (name) => {
         let trace = null;
-        if (name == this.state.trace_id)
+        if (name === this.state.trace_id)
             this.setState({trace: null, trace_id: null})
         else {
             this.state.trace_db.transaction(tx => {

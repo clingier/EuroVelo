@@ -62,7 +62,7 @@ const styles = StyleSheet.create({
         },
         shadowOpacity: 0.30,
         shadowRadius: 4.65,
-        
+
         elevation: 8,
     },
 
@@ -150,7 +150,7 @@ WRAPPER DE L'ECRAN AVEC TOUTES LES ROUTES POUR LA NAVIGATION<3
 */
 
 const RoadsScreenStackOptions = {
-    header: () => {return(<View></View>)} // NO header
+    header: () => {return(<View/>)} // NO header
 }
 const Roads = () => {
     return (
