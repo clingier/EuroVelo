@@ -58,7 +58,10 @@ class HomeScreen extends React.Component {
         };
         this.getLocationAsync.bind(this);
         this.loadTrace.bind(this);
-        // this.getLocationAsync(); // c'est pour que ça start sur notre position // jsp si c'est la meilleure façon de faire
+        //this.getLocationAsync(); // c'est pour que ça start sur notre position // jsp si c'est la meilleure façon de faire
+        this.followPerson.bind(this);
+        this.cameraSet.bind(this);
+        this.followPerson();
     }
 
     componentDidMount() {
@@ -100,6 +103,31 @@ class HomeScreen extends React.Component {
         }
         this._map.animateCamera(newCamera, {duration: 2000});
     }
+
+    followPerson = async () => {
+        let {status} = await Permissions.askAsync(Permissions.LOCATION);
+        if (status !== 'granted') {
+            this.setState({
+                errorMessage: 'Permission to access location was denied',
+            });
+        }
+        Location.watchPositionAsync( {accuracy: Location.Accuracy.BestForNavigation , timeInterval:1000 } , (loc) =>  this.cameraSet(loc));
+    }
+
+    cameraSet = (location) => {
+        console.log(location)
+        const {latitude, longitude} = location.coords;
+        this.setState({location: {latitude, longitude}});
+        const newCamera = {
+            center: {latitude: latitude, longitude: longitude},
+            zoom: 15,
+            heading: 0,
+            pitch: 0,
+            altitude: 5
+        }
+        this._map.animateCamera(newCamera, {duration: 2000});
+    }
+
 
     render() {
         return (
