@@ -47,7 +47,7 @@ class RoadSelector extends React.Component {
     }
 
     changeActive(name){
-        if(this.state.active == name)
+        if(this.state.active === name)
             this.setState({active: null})
         else
             this.setState({active: name})
@@ -58,12 +58,12 @@ class RoadSelector extends React.Component {
         const roadbutton = (name) => {
             return (
             <TouchableOpacity
-            style={(name == this.state.active) ? [styles.button, styles.active] : styles.button}
+            style={(name === this.state.active) ? [styles.button, styles.active] : styles.button}
             onPress={() => {this.changeActive(name)}}>
                 <Text
                 style={styles.buttonText}>
-                    {name}{name == this.state.active && "  "}
-                    {name == this.state.active && <CrossSvg width={10} height={10} fill={"white"}/>}
+                    {name}{name === this.state.active && "  "}
+                    {name === this.state.active && <CrossSvg width={10} height={10} fill={"white"}/>}
                 </Text>
             </TouchableOpacity>)
         }
@@ -73,7 +73,7 @@ class RoadSelector extends React.Component {
         return (
             <ScrollView horizontal={true}>
                 {this.state.active && roadbutton(this.state.active)}
-                {roadnames.filter((value) => {return this.state.active != value}).map((value, index) => {
+                {roadnames.filter((value) => {return this.state.active !== value}).map((value, index) => {
                     return <View key={index}>{roadbutton(value)}</View>;
                 })}
             </ScrollView>

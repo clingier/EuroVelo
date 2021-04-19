@@ -1,7 +1,26 @@
 import * as React from 'react';
 import Description from '../Description';
 import {Dimensions, StyleSheet, ScrollView, Image, Text, View} from 'react-native';
-import pic from '../../assets/images/ev.jpg';
+import pic1 from '../../assets/images/eurovelo1.jpg';
+import pic2 from '../../assets/images/eurovelo2.jpg';
+import pic3 from '../../assets/images/eurovelo3.jpg';
+import pic4 from '../../assets/images/eurovelo4.jpg';
+import pic5 from '../../assets/images/eurovelo5.jpg';
+import pic6 from '../../assets/images/eurovelo6.jpg';
+import pic7 from '../../assets/images/eurovelo7.jpg';
+import pic8 from '../../assets/images/eurovelo8.jpg';
+import pic9 from '../../assets/images/eurovelo9.jpg';
+import pic10 from '../../assets/images/eurovelo10.jpg';
+import pic11 from '../../assets/images/eurovelo11.jpg';
+import pic12 from '../../assets/images/eurovelo12.jpg';
+import pic13 from '../../assets/images/eurovelo13.jpg';
+import pic14 from '../../assets/images/eurovelo14.jpg';
+import pic15 from '../../assets/images/eurovelo15.jpg';
+import pic16 from '../../assets/images/eurovelo16.jpg';
+import pic17 from '../../assets/images/eurovelo17.jpg';
+const pics = [pic1, pic2, pic3, pic4, pic5, pic6, pic7, pic8, pic9, pic10, pic11, pic12, pic13, pic14, pic15, pic16, pic17];
+
+
 import {TouchableHighlight} from 'react-native-gesture-handler';
 import routes from '../../assets/roads_data/roads.json';
 import {createStackNavigator} from "@react-navigation/stack";
@@ -62,7 +81,7 @@ const styles = StyleSheet.create({
         },
         shadowOpacity: 0.30,
         shadowRadius: 4.65,
-        
+
         elevation: 8,
     },
 
@@ -118,7 +137,7 @@ const Buttons = ({navigation}) => {
                             </View>
                         }
                     >
-                        <Image source={pic} style={styles.image}/>
+                        <Image source={pics[i]} style={styles.image}/>
                     </MaskedView>
 
                     <View style={styles.evInfo}>
@@ -150,7 +169,7 @@ WRAPPER DE L'ECRAN AVEC TOUTES LES ROUTES POUR LA NAVIGATION<3
 */
 
 const RoadsScreenStackOptions = {
-    header: () => {return(<View></View>)} // NO header
+    header: () => {return(<View/>)} // NO header
 }
 const Roads = () => {
     return (
