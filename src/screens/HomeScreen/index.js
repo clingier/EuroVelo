@@ -76,7 +76,7 @@ class HomeScreen extends React.Component {
         else {
             console.log("querying database for a new trace " + name);
             this.state.trace_db.transaction(tx => {
-                tx.executeSql("SELECT * FROM traces WHERE route_id == ?;", [name],
+                tx.executeSql("SELECT * FROM " + name + " ;", null ,
                 (txObj, { rows: { _array } }) => {
                     console.log("query successfull")
                     this.setState({trace: _array, trace_id: name})
