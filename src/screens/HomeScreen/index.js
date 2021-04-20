@@ -64,23 +64,24 @@ class HomeScreen extends React.Component {
         this.followPerson();
     }
 
-    componentDidMount() {
-        this.setState({trace: null})
+    componentDidUpdate = (prevProps, prevState) => {
+        if(this.props.route !== undefined && prevProps.route !== this.props.route)
+            this.loadTrace(this.props.route);
     }
 
     loadTrace = (name) => {
         let trace = null;
-        if (name === this.state.trace_id)
+        if (name === this.state.trace_id) {
             this.setState({trace: null, trace_id: null})
+        }
         else {
+            console.log("querying database for a new trace " + name);
             this.state.trace_db.transaction(tx => {
                 tx.executeSql("SELECT * FROM traces WHERE route_id == ?;", [name],
                 (txObj, { rows: { _array } }) => this.setState({trace: _array, trace_id: name}),
-                (txObj, error) => console.log("Error ", error)
-                )
+                (txObj, error) => console.log("Error ", error))
             })
         }
-        this.setState({trace: trace, trace_id: name});
     }
 
     getLocationAsync = async () => {
@@ -111,11 +112,13 @@ class HomeScreen extends React.Component {
                 errorMessage: 'Permission to access location was denied',
             });
         }
-        Location.watchPositionAsync( {accuracy: Location.Accuracy.BestForNavigation , timeInterval:1000 } , (loc) =>  this.cameraSet(loc));
+        Location.watchPositionAsync( {accuracy: Location.Accuracy.BestForNavigation , timeInterval:1000 } , (loc) => {
+            const {latitude, longitude} = loc.coords
+            this.setState({location: {latitude, longitude}});
+        });
     }
 
     cameraSet = (location) => {
-        console.log(location)
         const {latitude, longitude} = location.coords;
         this.setState({location: {latitude, longitude}});
         const newCamera = {
@@ -147,7 +150,7 @@ class HomeScreen extends React.Component {
                 </MapView>
 
                 <View style={styles.roadselector}>
-                    <RoadSelector callback={this.loadTrace}/>
+                    <RoadSelector callback={this.loadTrace} active={this.state.trace_id}/>
                 </View>
 
                 <View style={styles.container}>
