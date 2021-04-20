@@ -52,10 +52,8 @@ const Description = ({navigation, route}) => {
                         {route.params.description}
                     </Text>
                 </View>
-
-
                 <TouchableHighlight
-                    onPress={() => navigation.navigate('Map')}>
+                    onPress={() => navigation.navigate('Map', {route: "ev" + route.params.number})}>
                     <View style={styles.scrollElem}>
                         <View style={styles.evInfo}>
                             <Text style={styles.evView}>Go to map</Text>

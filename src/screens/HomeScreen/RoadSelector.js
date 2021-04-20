@@ -1,4 +1,5 @@
 import React from 'react'
+import { TouchableHighlightBase } from 'react-native';
 import {View, ScrollView, StyleSheet, Text, TouchableOpacity} from 'react-native'
 import CrossSvg from '../../assets/svg/cross.svg';
 
@@ -52,6 +53,11 @@ class RoadSelector extends React.Component {
         else
             this.setState({active: name})
         this.state.callback(name);
+    }
+
+    componentDidUpdate = (prevProps) => {
+        if(this.props.active != null && this.state.active !== this.props.active)
+            this.changeActive(this.props.active)
     }
 
     render(){

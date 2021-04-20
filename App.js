@@ -56,7 +56,10 @@ export default class App extends React.Component {
                 }}
 
             >
-                <Tab.Screen name="Map">{() => <HomeScreen trace_db={this.state.trace_db} />}</Tab.Screen>
+                <Tab.Screen name="Map">{({navigation, route}) => 
+                {
+                  return <HomeScreen trace_db={this.state.trace_db} route={(route.params !== undefined) ? route.params.route : undefined}/>
+                }}</Tab.Screen>
                 <Tab.Screen name="Roads" component={Roads} />
                 <Tab.Screen name="Organisation" component={OrganisationScreen} />
             </Tab.Navigator>
