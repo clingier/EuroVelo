@@ -37,12 +37,10 @@ export default class App extends React.Component {
                             iconName = focused ? 'src/assets/svg/map.svg' : 'src/assets/svg/map.svg';
                             name = "map"
                             break;
-                            //return ( <SvgXml width="24" height="24" xml={SVGMap} />  )
                         case 'Roads':
                             iconName = focused ? 'src/assets/svg/direction.sgv' : 'src/assets/svg/direction.sgv';
                             name = "routes"
                             break;
-                            //return ( <SvgXml width="24" height="24" xml={SVGRoads} />  )
                         case 'Organisation':
                             iconName = focused ? 'src/assets/svg/calendar.sgv' : 'src/assets/svg/calendar.sgv';
                             name = "calendar-check"

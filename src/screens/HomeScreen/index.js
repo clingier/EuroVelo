@@ -4,6 +4,7 @@ import {StyleSheet, View, Dimensions, Alert, TouchableOpacity} from 'react-nativ
 import RoadSelector from './RoadSelector';
 import MapView, {Polyline, Marker} from 'react-native-maps';
 import LocationLogo from '../../assets/svg/location.svg';
+import LockLocationLogo from '../../assets/svg/lock-location.svg';
 import PositionLogo from '../../assets/svg/position.svg';
 import * as Location from 'expo-location';
 import * as Permissions from 'expo-permissions';
@@ -21,7 +22,9 @@ const styles = StyleSheet.create({
     },
     locationlogo: {
         backgroundColor: '#2FD175',
-        margin: 40,
+       // margin: 10,
+        marginBottom: 20,
+        marginRight: 20,
         paddingHorizontal: 10,
         paddingVertical: 10,
         borderRadius: 30,
@@ -54,12 +57,14 @@ class HomeScreen extends React.Component {
             geocode: null,
             trace: null,
             trace_id: null,
-            trace_db: props.trace_db
+            trace_db: props.trace_db,
+            locked: false
         };
         this.getLocationAsync.bind(this);
         this.loadTrace.bind(this);
-        this.followPerson.bind(this);
-        this.cameraSet.bind(this);
+        //this.getLocationAsync(); // c'est pour que ça start sur notre position // jsp si c'est la meilleure façon de faire
+        //this.followPerson.bind(this);
+        //this.cameraSet.bind(this);
         this.followPerson();
     }
 
@@ -114,23 +119,24 @@ class HomeScreen extends React.Component {
                 errorMessage: 'Permission to access location was denied',
             });
         }
-        Location.watchPositionAsync( {accuracy: Location.Accuracy.BestForNavigation , timeInterval:1000 } , (loc) => {
-            const {latitude, longitude} = loc.coords
-            this.setState({location: {latitude, longitude}});
-        });
+        Location.watchPositionAsync( {accuracy: Location.Accuracy.BestForNavigation , timeInterval:100 } , (loc) =>  this.cameraSet(loc));
     }
 
     cameraSet = (location) => {
-        const {latitude, longitude} = location.coords;
-        this.setState({location: {latitude, longitude}});
-        const newCamera = {
-            center: {latitude: latitude, longitude: longitude},
-            zoom: 15,
-            heading: 0,
-            pitch: 0,
-            altitude: 5
+        console.log("cameraSet");
+        if(this.state.locked){
+            console.log(location)
+            const {latitude, longitude} = location.coords;
+            this.setState({location: {latitude, longitude}});
+            const newCamera = {
+                center: {latitude: latitude, longitude: longitude},
+                zoom: 17,
+                heading: 0,
+                pitch: 0,
+                altitude: 1
+            }
+            this._map.animateCamera(newCamera, {duration: 100});
         }
-        this._map.animateCamera(newCamera, {duration: 2000});
     }
 
 
@@ -141,7 +147,9 @@ class HomeScreen extends React.Component {
             <View style={styles.container}>
                 <MapView
                     style={styles.map}
-                    ref={component => this._map = component}>
+                    ref={component => this._map = component}
+                    onPanDrag = {() => this.state.locked = false}
+                >
 
                     {this.state.location && <Marker coordinate={this.state.location} flat anchor={{x: 0.5, y: 0.5}}>
                         <View>
@@ -163,6 +171,12 @@ class HomeScreen extends React.Component {
                         style={(this.state.location) ? styles.locationlogo : [styles.locationlogo, styles.inactive]}
                     >
                         <LocationLogo width={30} height={30} fill={"white"}/>
+                    </TouchableOpacity>
+                    <TouchableOpacity
+                        onPress={ () => {this.state.locked = true}}
+                        style={(this.state.location) ? styles.locationlogo : [styles.locationlogo, styles.inactive]}
+                    >
+                        <LockLocationLogo width={30} height={30} fill={"white"}/>
                     </TouchableOpacity>
                 </View>
 
