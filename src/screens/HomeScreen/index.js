@@ -58,7 +58,6 @@ class HomeScreen extends React.Component {
         };
         this.getLocationAsync.bind(this);
         this.loadTrace.bind(this);
-        //this.getLocationAsync(); // c'est pour que ça start sur notre position // jsp si c'est la meilleure façon de faire
         this.followPerson.bind(this);
         this.cameraSet.bind(this);
         this.followPerson();
@@ -78,7 +77,10 @@ class HomeScreen extends React.Component {
             console.log("querying database for a new trace " + name);
             this.state.trace_db.transaction(tx => {
                 tx.executeSql("SELECT * FROM traces WHERE route_id == ?;", [name],
-                (txObj, { rows: { _array } }) => this.setState({trace: _array, trace_id: name}),
+                (txObj, { rows: { _array } }) => {
+                    console.log("query successfull")
+                    this.setState({trace: _array, trace_id: name})
+                },
                 (txObj, error) => console.log("Error ", error))
             })
         }
@@ -133,6 +135,8 @@ class HomeScreen extends React.Component {
 
 
     render() {
+        if(this.state.trace != null)
+            console.log("Rendering trace")
         return (
             <View style={styles.container}>
                 <MapView
