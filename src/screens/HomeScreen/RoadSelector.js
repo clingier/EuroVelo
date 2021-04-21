@@ -56,6 +56,9 @@ class RoadSelector extends React.Component {
     }
 
     componentDidUpdate = (prevProps) => {
+        console.log("roadselector debug: ")
+        console.log("state.active " + this.state.active)
+        console.log("props.active " + this.props.active)
         if(this.props.active != null && this.state.active !== this.props.active)
             this.changeActive(this.props.active)
     }

@@ -75,6 +75,7 @@ class HomeScreen extends React.Component {
 
     loadTrace = (name) => {
         let trace = null;
+        this.props.route = undefined
         if (name === this.state.trace_id) {
             this.setState({trace: null, trace_id: null})
         }
@@ -123,9 +124,7 @@ class HomeScreen extends React.Component {
     }
 
     cameraSet = (location) => {
-        console.log("cameraSet");
         if(this.state.locked){
-            console.log(location)
             const {latitude, longitude} = location.coords;
             this.setState({location: {latitude, longitude}});
             const newCamera = {
@@ -141,8 +140,9 @@ class HomeScreen extends React.Component {
 
 
     render() {
-        if(this.state.trace != null)
+        if(this.state.trace != null) {
             console.log("Rendering trace")
+        }
         return (
             <View style={styles.container}>
                 <MapView
@@ -157,12 +157,12 @@ class HomeScreen extends React.Component {
                         </View>
                     </Marker>}
 
-                    {this.state.trace &&
+                    {this.state.trace != null &&
                     <Polyline coordinates={this.state.trace} strokeWidth={2} strokeColor={"black"}/>}
                 </MapView>
 
                 <View style={styles.roadselector}>
-                    <RoadSelector callback={this.loadTrace} active={this.state.trace_id}/>
+                    <RoadSelector callback={this.loadTrace} active={(this.props.route != undefined) ? this.props.route : null}/>
                 </View>
 
                 <View style={styles.container}>
