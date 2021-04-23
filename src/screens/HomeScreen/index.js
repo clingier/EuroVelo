@@ -58,24 +58,15 @@ class HomeScreen extends React.Component {
             trace: null,
             trace_id: null,
             trace_db: props.trace_db,
-            locked: false
+            locked: false,
         };
         this.getLocationAsync.bind(this);
         this.loadTrace.bind(this);
-        //this.getLocationAsync(); // c'est pour que ça start sur notre position // jsp si c'est la meilleure façon de faire
-        //this.followPerson.bind(this);
-        //this.cameraSet.bind(this);
         this.followPerson();
-    }
-
-    componentDidUpdate = (prevProps, prevState) => {
-        if(this.props.route !== undefined && prevProps.route !== this.props.route)
-            this.loadTrace(this.props.route);
     }
 
     loadTrace = (name) => {
         let trace = null;
-        this.props.route = undefined
         if (name === this.state.trace_id) {
             this.setState({trace: null, trace_id: null})
         }
@@ -138,7 +129,6 @@ class HomeScreen extends React.Component {
         }
     }
 
-
     render() {
         if(this.state.trace != null) {
             console.log("Rendering trace")
@@ -162,7 +152,7 @@ class HomeScreen extends React.Component {
                 </MapView>
 
                 <View style={styles.roadselector}>
-                    <RoadSelector callback={this.loadTrace} active={(this.props.route != undefined) ? this.props.route : null}/>
+                    <RoadSelector callback={this.loadTrace} />
                 </View>
 
                 <View style={styles.container}>
