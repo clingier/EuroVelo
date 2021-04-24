@@ -1,6 +1,8 @@
 import React, {Component} from 'react';
-import {StyleSheet, Text, View} from 'react-native';
+import {Dimensions, Image, StyleSheet, Text, View, SafeAreaView} from 'react-native';
 import {CheckBox} from "react-native-elements";
+import pic from '../../assets/images/ev.jpg';
+
 
 
 export default class Screen extends Component {
@@ -89,6 +91,7 @@ export default class Screen extends Component {
                                 my_check[4 * i + 2] = res["Supper"];
                                 my_check[4 * i + 3] = res["Sleeping place"];
 
+
                                 this.setState({check: my_check})
                             } else {
                                 this.state.organisation_db.transaction((tx) => {
@@ -111,111 +114,156 @@ export default class Screen extends Component {
         // on crée les checkboxes
         const Buttons = () => {
             const buttons = [];
-            for (let i = 0; i < 3; i++) {
-                buttons.push(
-                    <View key={i}>
-                        <Text style={styles.second_title}>{this.days[i]}</Text>
-                        <View style={styles.row}>
-                            <View style={styles.checkbox}>
-                                <CheckBox
-                                    title='Breakfast'
-                                    checkedColor='green'
-                                    checked={this.state.check[4 * i]} // 4*i pour atteindre la bonne checkbox
-                                    onPress={() => {
-                                        let my_check = this.state.check;
-                                        my_check[4 * i] = !my_check[4 * i];
-                                        this.setState({check: my_check})
-                                        this.setCheck("Breakfast", my_check[4 * i], this.state.date + i);
-                                    }}
-                                />
+                for (let i = 0; i < 3; i++) {
+                    buttons.push(
+                        <View key={i}>
+                            <Text style={styles.second_title}>{this.days[i]}</Text>
+
+                            <View style={styles.row}>
+                                    <View style={styles.checkbox}>
+                                        <CheckBox
+                                            title='Breakfast'
+                                            checkedColor="#2FD175"
+                                            checked={this.state.check[4 * i]} // 4*i pour atteindre la bonne checkbox
+                                            textStyle={styles.textButton}
+                                            onPress={() => {
+                                                let my_check = this.state.check;
+                                                my_check[4 * i] = !my_check[4 * i];
+                                                this.setState({check: my_check})
+                                                this.setCheck("Breakfast", my_check[4 * i], this.state.date + i);
+                                            }}
+                                        />
+                                    </View>
+                                    <View style={styles.checkbox}>
+                                        <CheckBox
+                                            title='Dinner'
+                                            checkedColor="#2FD175"
+                                            checked={this.state.check[4 * i + 1]}
+                                            textStyle={styles.textButton}
+                                            onPress={() => {
+                                                let my_check = this.state.check;
+                                                my_check[4 * i + 1] = !my_check[4 * i + 1];
+                                                this.setState({check: my_check});
+                                                this.setCheck("Dinner", my_check[4 * i + 1], this.state.date + i);
+                                            }}
+                                        />
+                                    </View>
+                                </View>
+
+
+                            <View style={styles.row}>
+                                    <View style={styles.checkbox}>
+                                        <CheckBox
+                                            title='Supper'
+                                            checkedColor="#2FD175"
+                                            checked={this.state.check[4 * i + 2]} // 4*i pour atteindre la bonne checkbox
+                                            textStyle={styles.textButton}
+                                            onPress={() => {
+                                                let my_check = this.state.check;
+                                                my_check[4 * i + 2] = !my_check[4 * i + 2];
+                                                this.setState({check: my_check})
+                                                this.setCheck("Supper", my_check[4 * i + 2], this.state.date + i);
+                                            }}
+                                        />
+                                    </View>
+                                    <View style={styles.checkbox}>
+                                        <CheckBox
+                                            title='Sleeping place'
+                                            checkedColor="#2FD175"
+                                            checked={this.state.check[4 * i + 3]}
+                                            containerStyle={styles.Button}
+                                            textStyle={styles.textButton}
+                                            onPress={() => {
+                                                let my_check = this.state.check;
+                                                my_check[4 * i + 3] = !my_check[4 * i + 3];
+                                                this.setState({check: my_check});
+                                                this.setCheck("Sleeping place", my_check[4 * i + 3], this.state.date + i);
+                                            }}
+                                        />
+                                    </View>
                             </View>
-                            <View style={styles.checkbox}>
-                                <CheckBox
-                                    title='Dinner'
-                                    checkedColor='green'
-                                    checked={this.state.check[4 * i + 1]}
-                                    onPress={() => {
-                                        let my_check = this.state.check;
-                                        my_check[4 * i + 1] = !my_check[4 * i + 1];
-                                        this.setState({check: my_check});
-                                        this.setCheck("Dinner", my_check[4 * i + 1], this.state.date + i);
-                                    }}
-                                />
-                            </View>
+
                         </View>
-                        <View style={styles.row}>
-                            <View style={styles.checkbox}>
-                                <CheckBox
-                                    title='Supper'
-                                    checkedColor='green'
-                                    checked={this.state.check[4 * i + 2]} // 4*i pour atteindre la bonne checkbox
-                                    onPress={() => {
-                                        let my_check = this.state.check;
-                                        my_check[4 * i + 2] = !my_check[4 * i + 2];
-                                        this.setState({check: my_check})
-                                        this.setCheck("Supper", my_check[4 * i + 2], this.state.date + i);
-                                    }}
-                                />
-                            </View>
-                            <View style={styles.checkbox}>
-                                <CheckBox
-                                    title='Sleeping place'
-                                    checkedColor='green'
-                                    checked={this.state.check[4 * i + 3]}
-                                    onPress={() => {
-                                        let my_check = this.state.check;
-                                        my_check[4 * i + 3] = !my_check[4 * i + 3];
-                                        this.setState({check: my_check});
-                                        this.setCheck("Sleeping place", my_check[4 * i + 3], this.state.date + i);
-                                    }}
-                                />
-                            </View>
-                        </View>
-                    </View>
-                );
-            }
+                    );
+                }
+            //
             return buttons;
         };
 
         return (
-            <View style={styles.container}>
-                <Text style={styles.title}>Organisation</Text>
-                {Buttons()}
-            </View>
+            <SafeAreaView style={styles.container}>
+                <View style={styles.little_first}>
+                    <Text style={styles.title}>Organisation</Text>
+                </View>
+                <View style={styles.little_second}>
+                    {Buttons()}
+                </View>
+                <View style={styles.little_third}>
+                    <Image source={pic} style={styles.image} resizeMode={'cover'}/>
+                </View>
+            </SafeAreaView>
+
         );
     }
 }
-
+//                    {Buttons()}
+//                        <Image source={pic} style={styles.image} resizeMode={'cover'}/>
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        justifyContent: 'flex-start',
+        paddingTop: '5%'
+    },
+    separator: {
+        height: 1,
     },
 
     title: {
-        marginTop: 30,
-        fontSize: 50,
+        paddingTop:'3%',
+        paddingHorizontal: '5%',
+        fontSize: Dimensions.get("window").height*0.055,
         fontWeight: 'bold',
+        color:"#2FD175",
     },
-
+    little_first: {
+    },
+    little_second: {
+        marginBottom: '5%'
+    },
+    little_third: {
+        flex: 1,
+        marginHorizontal: "3%",
+        marginTop: 0,
+        marginBottom: 0,
+    },
     second_title: {
-        fontSize: 30,
-        fontWeight: 'normal'
-    },
-
-    separator: {
-        marginVertical: 10,
-        height: 1,
-        width: '80%',
+        fontSize: Dimensions.get("window").height*0.021,
+        fontWeight: 'bold',
+        paddingLeft: '5%',
+        marginTop: '2%',
+        marginBottom: '2%'
     },
 
     row: {
         justifyContent: 'center',
         flexDirection: 'row',
-        height: 50,
+        marginVertical: '-1%',
     },
 
     checkbox: {
-        width: '50%'
+        marginHorizontal: '-2%',
+        width: '50%',
+    },
+    image: {
+
+        direction:'ltr',
+        borderRadius: 30,
+        overflow:'hidden',
+        bottom:0,
+        height: '100%',
+        width: '100%',
+        marginTop: '-2%',
+    },
+    textButton: {
+        fontSize: Dimensions.get("window").height*0.019,
     }
 });
