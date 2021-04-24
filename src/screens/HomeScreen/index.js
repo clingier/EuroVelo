@@ -138,7 +138,7 @@ class HomeScreen extends React.Component {
                 <MapView
                     style={styles.map}
                     ref={component => this._map = component}
-                    onPanDrag = {() => this.state.locked = false}
+                    onPanDrag = {() => this.setState({locked: false})}
                 >
 
                     {this.state.location && <Marker coordinate={this.state.location} flat anchor={{x: 0.5, y: 0.5}}>
@@ -164,7 +164,7 @@ class HomeScreen extends React.Component {
                     </TouchableOpacity>
                     <TouchableOpacity
                         onPress={ () => {this.state.locked = true}}
-                        style={(this.state.location) ? styles.locationlogo : [styles.locationlogo, styles.inactive]}
+                        style={(this.state.locked) ? styles.locationlogo : [styles.locationlogo, styles.inactive]}
                     >
                         <LockLocationLogo width={30} height={30} fill={"white"}/>
                     </TouchableOpacity>
