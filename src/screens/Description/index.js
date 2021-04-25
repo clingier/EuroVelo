@@ -39,8 +39,13 @@ const Description = ({navigation, route}) => {
                 </View>
             </View>
         );
-    else return (
-        <View style={[styles.container]}>
+        else return (
+            <View style={[styles.container]}>
+            <LinearGradient
+                    // Background Linear Gradient
+                    colors={['#F3F8FF', 'white']}
+                    style={styles.gradientBackground}
+            />                        
             <ScrollView>
                 <View style={styles.imageContainer}>
                     <View style={styles.backButton}>
@@ -64,11 +69,6 @@ const Description = ({navigation, route}) => {
                         </Text>
                     </View>
                     <View style={styles.descriptionContainer}>
-                        <LinearGradient
-                                // Background Linear Gradient
-                                colors={['#F3F8FF', 'white']}
-                                style={styles.gradientBackground}
-                        />                        
                         <Text style={styles.description}>
                             {route.params.description}
                         </Text>
@@ -120,13 +120,14 @@ const styles = StyleSheet.create({
         fontSize: 14,
         color: "#3D3F43",
         lineHeight: 20,
+        backgroundColor: "transparent"
     },
     gradientBackground: {
         position: 'absolute',
         left: 0,
         right: 0,
         top: 0,
-        height: "120%"
+        height: Dimensions.get('window').height,
     },
     backButton: {
         position: 'absolute',
