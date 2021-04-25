@@ -62,6 +62,7 @@ class HomeScreen extends React.Component {
         };
         this.getLocationAsync.bind(this);
         this.loadTrace.bind(this);
+        this.unlockView.bind(this);
         this.followPerson();
     }
 
@@ -129,6 +130,11 @@ class HomeScreen extends React.Component {
         }
     }
 
+    unlockView = () => {
+        if(this.state.locked)
+            this.setState({locked: false})
+    }
+
     render() {
         if(this.state.trace != null) {
             console.log("Rendering trace")
@@ -138,7 +144,7 @@ class HomeScreen extends React.Component {
                 <MapView
                     style={styles.map}
                     ref={component => this._map = component}
-                    onPanDrag = {() => this.state.locked = false}
+                    onPanDrag = {() => this.unlockView()}
                 >
 
                     {this.state.location && <Marker coordinate={this.state.location} flat anchor={{x: 0.5, y: 0.5}}>
