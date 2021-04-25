@@ -148,7 +148,7 @@ class HomeScreen extends React.Component {
                     </Marker>}
 
                     {this.state.trace != null &&
-                    <Polyline coordinates={this.state.trace} strokeWidth={2} strokeColor={"black"}/>}
+                    <Polyline coordinates={this.state.trace} strokeWidth={2} strokeColor={"#2FD175"}/>}
                 </MapView>
 
                 <View style={styles.roadselector}>

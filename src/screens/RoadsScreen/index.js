@@ -140,7 +140,8 @@ const Buttons = ({navigation}) => {
                 <TouchableHighlight onPress={() => navigation.navigate('Description', {
                             number: routes[i].id,
                             name: routes[i].title,
-                            description: routes[i].description
+                            description: routes[i].description,
+                            km: routes[i].length
                         })} style={styles.scrollElem}>
                             <View>
                                 <Image source={Asset.fromModule(pics[i])} style={styles.image}/>
@@ -177,11 +178,15 @@ const RoadsScreenStackOptions = {
     header: () => {return(<View/>)} // NO header
 }
 
+const DescriptionStackOptions = {
+    header: () => {return(<View/>)}
+}
+
 const Roads = () => {
     return (
         <Stack.Navigator>
             <Stack.Screen name="Roads" component={RoadsScreen} options={RoadsScreenStackOptions}/>
-            <Stack.Screen name="Description" component={Description} />
+            <Stack.Screen name="Description" component={Description} options={DescriptionStackOptions} />
         </Stack.Navigator>
     );
 }
