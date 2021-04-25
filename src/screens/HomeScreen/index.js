@@ -138,7 +138,7 @@ class HomeScreen extends React.Component {
                 <MapView
                     style={styles.map}
                     ref={component => this._map = component}
-                    onPanDrag = {() => this.setState({locked: false})}
+                    onPanDrag = {() => this.state.locked = false}
                 >
 
                     {this.state.location && <Marker coordinate={this.state.location} flat anchor={{x: 0.5, y: 0.5}}>
