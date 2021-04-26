@@ -8,6 +8,7 @@ import LockLocationLogo from '../../assets/svg/lock-location.svg';
 import PositionLogo from '../../assets/svg/position.svg';
 import * as Location from 'expo-location';
 import * as Permissions from 'expo-permissions';
+import {usePermissions} from 'expo-permissions';    
 
 const styles = StyleSheet.create({
     container: {
@@ -59,11 +60,11 @@ class HomeScreen extends React.Component {
             trace_id: null,
             trace_db: props.trace_db,
             locked: false,
+            showLocation: false
         };
         this.getLocationAsync.bind(this);
         this.loadTrace.bind(this);
         this.unlockView.bind(this);
-        this.followPerson();
     }
 
     loadTrace = (name) => {
@@ -84,38 +85,67 @@ class HomeScreen extends React.Component {
         }
     }
 
-    getLocationAsync = async () => {
-        let {status} = await Permissions.askAsync(Permissions.LOCATION);
-        if (status !== 'granted') {
-            this.setState({
-                errorMessage: 'Permission to access location was denied',
-            });
+    getLocationPermission = async () => {
+        const {status} = await Permissions.getAsync(Permissions.LOCATION);
+        console.log(status)
+        if(status !== 'granted')
+        {
+            const {status} = await Permissions.askAsync(Permissions.LOCATION);
+            if(status === 'denied')
+            {
+                Alert.alert("Location Permission", "To use fully our app we need to have access to your location.")
+            }
         }
+    }
 
-        let location = await Location.getCurrentPositionAsync({accuracy: Location.Accuracy.BestForNavigation});
-        const {latitude, longitude} = location.coords;
-        this.setState({location: {latitude, longitude}});
-        const newCamera = {
-            center: {latitude: latitude, longitude: longitude},
-            zoom: 15,
-            heading: 0,
-            pitch: 0,
-            altitude: 5
+    getLocationAsync = async (pressed) => {
+        const {status} = await Permissions.getAsync(Permissions.LOCATION);
+        if(status === 'granted')
+        {
+            if(pressed)
+                this.state.showLocation = !this.state.showLocation;
+            let location = await Location.getCurrentPositionAsync({accuracy: Location.Accuracy.BestForNavigation});
+            const {latitude, longitude} = location.coords;
+            if(this.state.location == null) {
+                this.setState({location: {latitude, longitude}});
+                this.state.showLocation = true;
+                const newCamera = {
+                    center: {latitude: latitude, longitude: longitude},
+                    zoom: 15,
+                    heading: 0,
+                    pitch: 0,
+                    altitude: 5
+                }
+                this._map.animateCamera(newCamera, {duration: 2000});
+            }
+            else
+            {
+                this.setState({location: {latitude, longitude}});
+            }
         }
-        this._map.animateCamera(newCamera, {duration: 2000});
+        else
+            this.getLocationPermission();
     }
 
     followPerson = async () => {
-        let {status} = await Permissions.askAsync(Permissions.LOCATION);
-        if (status !== 'granted') {
-            this.setState({
-                errorMessage: 'Permission to access location was denied',
-            });
+        if(this.state.locked){
+            this.setState({locked: false});
         }
-        Location.watchPositionAsync( {accuracy: Location.Accuracy.BestForNavigation , timeInterval:100 } , (loc) =>  this.cameraSet(loc));
+        else
+        {
+            const {status} = await Permissions.getAsync(Permissions.LOCATION);
+            if(status === 'granted')
+            {
+                this.setState({locked: true, showLocation: true})
+                Location.watchPositionAsync( {accuracy: Location.Accuracy.BestForNavigation , timeInterval:100 } , (loc) =>  this.cameraSet(loc));
+            }
+            else
+                this.getLocationPermission()
+        }
     }
 
     cameraSet = (location) => {
+        console.log(location)
         if(this.state.locked){
             const {latitude, longitude} = location.coords;
             this.setState({location: {latitude, longitude}});
@@ -126,13 +156,19 @@ class HomeScreen extends React.Component {
                 pitch: 0,
                 altitude: 1
             }
-            this._map.animateCamera(newCamera, {duration: 100});
+            this._map.animateCamera(newCamera, {duration: 50});
         }
     }
 
     unlockView = () => {
         if(this.state.locked)
             this.setState({locked: false})
+    }
+
+    componentDidUpdate = () => {
+        if(this.state.location && !this.state.locked){
+            this.getLocationAsync()
+        }
     }
 
     render() {
@@ -147,7 +183,7 @@ class HomeScreen extends React.Component {
                     onPanDrag = {() => this.unlockView()}
                 >
 
-                    {this.state.location && <Marker coordinate={this.state.location} flat anchor={{x: 0.5, y: 0.5}}>
+                    {this.state.showLocation && this.state.location && <Marker coordinate={this.state.location} flat anchor={{x: 0.5, y: 0.5}}>
                         <View>
                             <PositionLogo/>
                         </View>
@@ -163,13 +199,15 @@ class HomeScreen extends React.Component {
 
                 <View style={styles.container}>
                     <TouchableOpacity
-                        onPress={this.getLocationAsync}
-                        style={(this.state.location) ? styles.locationlogo : [styles.locationlogo, styles.inactive]}
+                        onPress={() => {
+                            this.getLocationAsync(true);
+                        }}
+                        style={(this.state.showLocation) ? styles.locationlogo : [styles.locationlogo, styles.inactive]}
                     >
                         <LocationLogo width={30} height={30} fill={"white"}/>
                     </TouchableOpacity>
                     <TouchableOpacity
-                        onPress={ () => {this.state.locked = true}}
+                        onPress={this.followPerson}
                         style={(this.state.locked) ? styles.locationlogo : [styles.locationlogo, styles.inactive]}
                     >
                         <LockLocationLogo width={30} height={30} fill={"white"}/>

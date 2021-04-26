@@ -43,7 +43,7 @@ const Description = ({navigation, route}) => {
             <View style={[styles.container]}>
             <LinearGradient
                     // Background Linear Gradient
-                    colors={['#F3F8FF', 'white']}
+                    colors={['#E6F0FF', 'white']}
                     style={styles.gradientBackground}
             />                        
             <ScrollView>
