@@ -1,14 +1,13 @@
-import React, {Component} from 'react';
-import {useState} from 'react';
-import {StyleSheet, View, Dimensions, Alert, TouchableOpacity} from 'react-native';
+import React from 'react';
+import {StyleSheet, View, Dimensions, Alert, TouchableOpacity, Text, TouchableNativeFeedbackBase} from 'react-native';
 import RoadSelector from './RoadSelector';
 import MapView, {Polyline, Marker} from 'react-native-maps';
 import LocationLogo from '../../assets/svg/location.svg';
 import LockLocationLogo from '../../assets/svg/lock-location.svg';
+import Bicycle from '../../assets/svg/bicycle.svg';
 import PositionLogo from '../../assets/svg/position.svg';
 import * as Location from 'expo-location';
 import * as Permissions from 'expo-permissions';
-import {usePermissions} from 'expo-permissions';    
 
 const styles = StyleSheet.create({
     container: {
@@ -23,7 +22,6 @@ const styles = StyleSheet.create({
     },
     locationlogo: {
         backgroundColor: '#2FD175',
-       // margin: 10,
         marginBottom: 20,
         marginRight: 20,
         paddingHorizontal: 10,
@@ -46,6 +44,45 @@ const styles = StyleSheet.create({
         position: 'absolute',
         top: 10,
         margin: 20
+    },
+    bikelogo: {
+        backgroundColor: '#2FD175',
+        marginBottom: 20,
+        marginRight: 20,
+        paddingHorizontal: 10,
+        paddingVertical: 10,
+        borderRadius: 30,
+        shadowColor: "#000",
+        shadowOffset: {
+            width: 0,
+            height: 6,
+        },
+        shadowOpacity: 0.39,
+        shadowRadius: 8.30,
+        elevation: 13,
+    },
+    speedometer: {
+        position: 'absolute',
+        left: 20,
+        bottom: 40,
+        width: Dimensions.get('window').width * 0.15,
+        height: Dimensions.get('window').width * 0.15,
+        backgroundColor: "white",
+        justifyContent: 'center',
+        borderRadius: 30,
+        borderColor: "#2FD175",
+        borderWidth: 3,
+        shadowColor: "#000",
+        shadowOffset: {
+            width: 0,
+            height: 6,
+        },
+        shadowOpacity: 0.39,
+        shadowRadius: 8.30,
+        elevation: 13,
+    },
+    kmh: {
+        fontSize: 9
     }
 });
 
@@ -60,7 +97,7 @@ class HomeScreen extends React.Component {
             trace_id: null,
             trace_db: props.trace_db,
             locked: false,
-            showLocation: false
+            showLocation: false,
         };
         this.getLocationAsync.bind(this);
         this.loadTrace.bind(this);
@@ -137,7 +174,7 @@ class HomeScreen extends React.Component {
             if(status === 'granted')
             {
                 this.setState({locked: true, showLocation: true})
-                Location.watchPositionAsync( {accuracy: Location.Accuracy.BestForNavigation , timeInterval:100 } , (loc) =>  this.cameraSet(loc));
+                Location.watchPositionAsync( {accuracy: Location.Accuracy.BestForNavigation , timeInterval:200 } , (loc) =>  this.cameraSet(loc));
             }
             else
                 this.getLocationPermission()
@@ -145,24 +182,27 @@ class HomeScreen extends React.Component {
     }
 
     cameraSet = (location) => {
-        console.log(location)
         if(this.state.locked){
             const {latitude, longitude} = location.coords;
-            this.setState({location: {latitude, longitude}});
+            this.setState({location: {latitude, longitude}, speed: Math.round(location.coords.speed, 1)});
+            console.log(location)
             const newCamera = {
                 center: {latitude: latitude, longitude: longitude},
                 zoom: 17,
-                heading: 0,
-                pitch: 0,
+                heading: location.coords.heading,
+                pitch: 40,
                 altitude: 1
             }
-            this._map.animateCamera(newCamera, {duration: 50});
+            this._map.animateCamera(newCamera, {duration: 200});
         }
     }
 
     unlockView = () => {
         if(this.state.locked)
+        {
             this.setState({locked: false})
+            this._map.animateCamera({pitch: 0}, {duration: 200});
+        }
     }
 
     componentDidUpdate = () => {
@@ -198,19 +238,24 @@ class HomeScreen extends React.Component {
                 </View>
 
                 <View style={styles.container}>
+                    {this.state.locked && this.state.speed &&
+                        <View style={styles.speedometer}>
+                            <Text style={{alignSelf: 'center'}}>{this.state.speed} <Text style={styles.kmh}>km/h</Text></Text>
+                        </View>
+                    }
                     <TouchableOpacity
                         onPress={() => {
                             this.getLocationAsync(true);
                         }}
                         style={(this.state.showLocation) ? styles.locationlogo : [styles.locationlogo, styles.inactive]}
                     >
-                        <LocationLogo width={30} height={30} fill={"white"}/>
+                        <LocationLogo width={25} height={25} fill={"white"}/>
                     </TouchableOpacity>
                     <TouchableOpacity
                         onPress={this.followPerson}
-                        style={(this.state.locked) ? styles.locationlogo : [styles.locationlogo, styles.inactive]}
+                        style={(this.state.locked) ? styles.locationlogo : [styles.bikelogo, styles.inactive]}
                     >
-                        <LockLocationLogo width={30} height={30} fill={"white"}/>
+                        <Bicycle width={25} height={25}  fill={"white"}/>
                     </TouchableOpacity>
                 </View>
 
