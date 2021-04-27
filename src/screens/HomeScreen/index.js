@@ -98,10 +98,12 @@ class HomeScreen extends React.Component {
             trace_db: props.trace_db,
             locked: false,
             showLocation: false,
+            speed: null
         };
         this.getLocationAsync.bind(this);
         this.loadTrace.bind(this);
         this.unlockView.bind(this);
+        this.cameraSet.bind(this);
     }
 
     loadTrace = (name) => {
@@ -185,7 +187,6 @@ class HomeScreen extends React.Component {
         if(this.state.locked){
             const {latitude, longitude} = location.coords;
             this.setState({location: {latitude, longitude}, speed: Math.round(location.coords.speed, 1)});
-            console.log(location)
             const newCamera = {
                 center: {latitude: latitude, longitude: longitude},
                 zoom: 17,
@@ -193,7 +194,8 @@ class HomeScreen extends React.Component {
                 pitch: 40,
                 altitude: 1
             }
-            this._map.animateCamera(newCamera, {duration: 200});
+            if(this._map != null)
+                this._map.animateCamera(newCamera, {duration: 200});
         }
     }
 
@@ -201,7 +203,6 @@ class HomeScreen extends React.Component {
         if(this.state.locked)
         {
             this.setState({locked: false})
-            this._map.animateCamera({pitch: 0}, {duration: 200});
         }
     }
 
@@ -238,7 +239,7 @@ class HomeScreen extends React.Component {
                 </View>
 
                 <View style={styles.container}>
-                    {this.state.locked && this.state.speed &&
+                    {this.state.locked && this.state.speed != null &&
                         <View style={styles.speedometer}>
                             <Text style={{alignSelf: 'center'}}>{this.state.speed} <Text style={styles.kmh}>km/h</Text></Text>
                         </View>

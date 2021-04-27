@@ -128,7 +128,7 @@ const styles = StyleSheet.create({
     },
     evRoute:{
         color: "#80848A",
-        fontSize: 8
+        fontSize: 12
     }
 });
 
