@@ -3,6 +3,7 @@ import {useState} from 'react';
 import {StyleSheet, View, Dimensions, Alert, TouchableOpacity} from 'react-native';
 import RoadSelector from './RoadSelector';
 import MapView, {Polyline, Marker} from 'react-native-maps';
+import Spinner from 'react-native-loading-spinner-overlay';
 import LocationLogo from '../../assets/svg/location.svg';
 import LockLocationLogo from '../../assets/svg/lock-location.svg';
 import PositionLogo from '../../assets/svg/position.svg';
@@ -58,7 +59,8 @@ class HomeScreen extends React.Component {
             trace: null,
             trace_id: null,
             trace_db: props.trace_db,
-            locked: false
+            locked: false,
+            spinner: false
         };
         this.getLocationAsync.bind(this);
         this.loadTrace.bind(this);
@@ -79,6 +81,7 @@ class HomeScreen extends React.Component {
             this.setState({trace: null, trace_id: null})
         }
         else {
+            this.setState({spinner: true})
             console.log("querying database for a new trace " + name);
             this.state.trace_db.transaction(tx => {
                 tx.executeSql("SELECT * FROM " + name + " ;", null ,
@@ -87,6 +90,7 @@ class HomeScreen extends React.Component {
                     this.setState({trace: _array, trace_id: name})
                 },
                 (txObj, error) => console.log("Error ", error))
+            this.setState({spinner: false})
             })
         }
     }
@@ -144,7 +148,15 @@ class HomeScreen extends React.Component {
         if(this.state.trace != null)
             console.log("Rendering trace")
         return (
+
             <View style={styles.container}>
+                            <Spinner
+                    visible={this.state.spinner}
+                    textContent={'Loading...'}
+                    textStyle={{color: '#FFF'}}
+                    animation="slide"
+
+                />
                 <MapView
                     style={styles.map}
                     ref={component => this._map = component}
