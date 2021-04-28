@@ -55,11 +55,6 @@ class RoadSelector extends React.Component {
         this.state.callback(name);
     }
 
-    componentDidUpdate = (prevProps) => {
-        if(this.props.active != null && this.state.active !== this.props.active)
-            this.changeActive(this.props.active)
-    }
-
     render(){
         const roadbutton = (name) => {
             return (

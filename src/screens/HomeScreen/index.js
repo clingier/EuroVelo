@@ -1,11 +1,11 @@
-import React, {Component} from 'react';
-import {useState} from 'react';
-import {StyleSheet, View, Dimensions, Alert, TouchableOpacity} from 'react-native';
+import React from 'react';
+import {StyleSheet, View, Dimensions, Alert, TouchableOpacity, Text, TouchableNativeFeedbackBase} from 'react-native';
 import RoadSelector from './RoadSelector';
 import MapView, {Polyline, Marker} from 'react-native-maps';
 import Spinner from 'react-native-loading-spinner-overlay';
 import LocationLogo from '../../assets/svg/location.svg';
 import LockLocationLogo from '../../assets/svg/lock-location.svg';
+import Bicycle from '../../assets/svg/bicycle.svg';
 import PositionLogo from '../../assets/svg/position.svg';
 import * as Location from 'expo-location';
 import * as Permissions from 'expo-permissions';
@@ -23,7 +23,6 @@ const styles = StyleSheet.create({
     },
     locationlogo: {
         backgroundColor: '#2FD175',
-       // margin: 10,
         marginBottom: 20,
         marginRight: 20,
         paddingHorizontal: 10,
@@ -46,6 +45,45 @@ const styles = StyleSheet.create({
         position: 'absolute',
         top: 10,
         margin: 20
+    },
+    bikelogo: {
+        backgroundColor: '#2FD175',
+        marginBottom: 20,
+        marginRight: 20,
+        paddingHorizontal: 10,
+        paddingVertical: 10,
+        borderRadius: 30,
+        shadowColor: "#000",
+        shadowOffset: {
+            width: 0,
+            height: 6,
+        },
+        shadowOpacity: 0.39,
+        shadowRadius: 8.30,
+        elevation: 13,
+    },
+    speedometer: {
+        position: 'absolute',
+        left: 20,
+        bottom: 40,
+        width: Dimensions.get('window').width * 0.15,
+        height: Dimensions.get('window').width * 0.15,
+        backgroundColor: "white",
+        justifyContent: 'center',
+        borderRadius: 30,
+        borderColor: "#2FD175",
+        borderWidth: 3,
+        shadowColor: "#000",
+        shadowOffset: {
+            width: 0,
+            height: 6,
+        },
+        shadowOpacity: 0.39,
+        shadowRadius: 8.30,
+        elevation: 13,
+    },
+    kmh: {
+        fontSize: 9
     }
 });
 
@@ -60,19 +98,14 @@ class HomeScreen extends React.Component {
             trace_id: null,
             trace_db: props.trace_db,
             locked: false,
-            spinner: false
+            spinner: false,
+            showLocation: false,
+            speed: null
         };
         this.getLocationAsync.bind(this);
         this.loadTrace.bind(this);
-        //this.getLocationAsync(); // c'est pour que ça start sur notre position // jsp si c'est la meilleure façon de faire
-        //this.followPerson.bind(this);
-        //this.cameraSet.bind(this);
-        this.followPerson();
-    }
-
-    componentDidUpdate = (prevProps, prevState) => {
-        if(this.props.route !== undefined && prevProps.route !== this.props.route)
-            this.loadTrace(this.props.route);
+        this.unlockView.bind(this);
+        this.cameraSet.bind(this);
     }
 
     loadTrace = (name) => {
@@ -95,58 +128,98 @@ class HomeScreen extends React.Component {
         }
     }
 
-    getLocationAsync = async () => {
-        let {status} = await Permissions.askAsync(Permissions.LOCATION);
-        if (status !== 'granted') {
-            this.setState({
-                errorMessage: 'Permission to access location was denied',
-            });
+    getLocationPermission = async () => {
+        const {status} = await Permissions.getAsync(Permissions.LOCATION);
+        console.log(status)
+        if(status !== 'granted')
+        {
+            const {status} = await Permissions.askAsync(Permissions.LOCATION);
+            if(status === 'denied')
+            {
+                Alert.alert("Location Permission", "To use fully our app we need to have access to your location.")
+            }
         }
+    }
 
-        let location = await Location.getCurrentPositionAsync({accuracy: Location.Accuracy.BestForNavigation});
-        const {latitude, longitude} = location.coords;
-        this.setState({location: {latitude, longitude}});
-        const newCamera = {
-            center: {latitude: latitude, longitude: longitude},
-            zoom: 15,
-            heading: 0,
-            pitch: 0,
-            altitude: 5
+    getLocationAsync = async (pressed) => {
+        const {status} = await Permissions.getAsync(Permissions.LOCATION);
+        if(status === 'granted')
+        {
+            if(pressed)
+                this.state.showLocation = !this.state.showLocation;
+            let location = await Location.getCurrentPositionAsync({accuracy: Location.Accuracy.BestForNavigation});
+            const {latitude, longitude} = location.coords;
+            if(this.state.location == null) {
+                this.setState({location: {latitude, longitude}});
+                this.state.showLocation = true;
+                const newCamera = {
+                    center: {latitude: latitude, longitude: longitude},
+                    zoom: 15,
+                    heading: 0,
+                    pitch: 0,
+                    altitude: 5
+                }
+                this._map.animateCamera(newCamera, {duration: 2000});
+            }
+            else
+            {
+                this.setState({location: {latitude, longitude}});
+            }
         }
-        this._map.animateCamera(newCamera, {duration: 2000});
+        else
+            this.getLocationPermission();
     }
 
     followPerson = async () => {
-        let {status} = await Permissions.askAsync(Permissions.LOCATION);
-        if (status !== 'granted') {
-            this.setState({
-                errorMessage: 'Permission to access location was denied',
-            });
+        if(this.state.locked){
+            this.setState({locked: false});
         }
-        Location.watchPositionAsync( {accuracy: Location.Accuracy.BestForNavigation , timeInterval:100 } , (loc) =>  this.cameraSet(loc));
+        else
+        {
+            const {status} = await Permissions.getAsync(Permissions.LOCATION);
+            if(status === 'granted')
+            {
+                this.setState({locked: true, showLocation: true})
+                Location.watchPositionAsync( {accuracy: Location.Accuracy.BestForNavigation , timeInterval:200 } , (loc) =>  this.cameraSet(loc));
+            }
+            else
+                this.getLocationPermission()
+        }
     }
 
     cameraSet = (location) => {
-        console.log("cameraSet");
         if(this.state.locked){
-            console.log(location)
             const {latitude, longitude} = location.coords;
-            this.setState({location: {latitude, longitude}});
+            this.setState({location: {latitude, longitude}, speed: Math.round(location.coords.speed, 1)});
             const newCamera = {
                 center: {latitude: latitude, longitude: longitude},
                 zoom: 17,
-                heading: 0,
-                pitch: 0,
+                heading: location.coords.heading,
+                pitch: 40,
                 altitude: 1
             }
-            this._map.animateCamera(newCamera, {duration: 100});
+            if(this._map != null)
+                this._map.animateCamera(newCamera, {duration: 200});
         }
     }
 
+    unlockView = () => {
+        if(this.state.locked)
+        {
+            this.setState({locked: false})
+        }
+    }
+
+    componentDidUpdate = () => {
+        if(this.state.location && !this.state.locked){
+            this.getLocationAsync()
+        }
+    }
 
     render() {
-        if(this.state.trace != null)
+        if(this.state.trace != null) {
             console.log("Rendering trace")
+        }
         return (
 
             <View style={styles.container}>
@@ -160,35 +233,42 @@ class HomeScreen extends React.Component {
                 <MapView
                     style={styles.map}
                     ref={component => this._map = component}
-                    onPanDrag = {() => this.state.locked = false}
+                    onPanDrag = {() => this.unlockView()}
                 >
 
-                    {this.state.location && <Marker coordinate={this.state.location} flat anchor={{x: 0.5, y: 0.5}}>
+                    {this.state.showLocation && this.state.location && <Marker coordinate={this.state.location} flat anchor={{x: 0.5, y: 0.5}}>
                         <View>
                             <PositionLogo/>
                         </View>
                     </Marker>}
 
-                    {this.state.trace &&
-                    <Polyline coordinates={this.state.trace} strokeWidth={2} strokeColor={"black"}/>}
+                    {this.state.trace != null &&
+                    <Polyline coordinates={this.state.trace} strokeWidth={2} strokeColor={"#2FD175"}/>}
                 </MapView>
 
                 <View style={styles.roadselector}>
-                    <RoadSelector callback={this.loadTrace} active={this.state.trace_id}/>
+                    <RoadSelector callback={this.loadTrace} />
                 </View>
 
                 <View style={styles.container}>
+                    {this.state.locked && this.state.speed != null &&
+                        <View style={styles.speedometer}>
+                            <Text style={{alignSelf: 'center'}}>{this.state.speed} <Text style={styles.kmh}>km/h</Text></Text>
+                        </View>
+                    }
                     <TouchableOpacity
-                        onPress={this.getLocationAsync}
-                        style={(this.state.location) ? styles.locationlogo : [styles.locationlogo, styles.inactive]}
+                        onPress={() => {
+                            this.getLocationAsync(true);
+                        }}
+                        style={(this.state.showLocation) ? styles.locationlogo : [styles.locationlogo, styles.inactive]}
                     >
-                        <LocationLogo width={30} height={30} fill={"white"}/>
+                        <LocationLogo width={25} height={25} fill={"white"}/>
                     </TouchableOpacity>
                     <TouchableOpacity
-                        onPress={ () => {this.state.locked = true}}
-                        style={(this.state.location) ? styles.locationlogo : [styles.locationlogo, styles.inactive]}
+                        onPress={this.followPerson}
+                        style={(this.state.locked) ? styles.locationlogo : [styles.bikelogo, styles.inactive]}
                     >
-                        <LockLocationLogo width={30} height={30} fill={"white"}/>
+                        <Bicycle width={25} height={25}  fill={"white"}/>
                     </TouchableOpacity>
                 </View>
 
