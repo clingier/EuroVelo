@@ -190,12 +190,12 @@ class HomeScreen extends React.Component {
     cameraSet = (location) => {
         if(this.state.locked){
             const {latitude, longitude} = location.coords;
-            this.setState({location: {latitude, longitude}, speed: Math.round(location.coords.speed, 1)});
+            this.setState({location: {latitude, longitude}, speed: Math.round((location.coords.speed*3.6), 1)});
             const newCamera = {
                 center: {latitude: latitude, longitude: longitude},
                 zoom: 17,
                 heading: location.coords.heading,
-                pitch: 40,
+                pitch: 45,
                 altitude: 1
             }
             if(this._map != null)
