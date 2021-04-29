@@ -145,12 +145,11 @@ class HomeScreen extends React.Component {
         const {status} = await Permissions.getAsync(Permissions.LOCATION);
         if(status === 'granted')
         {
-            if(pressed)
-                this.state.showLocation = !this.state.showLocation;
+            if(pressed && this.state.showLocation === false) this.state.showLocation = true;
             let location = await Location.getCurrentPositionAsync({accuracy: Location.Accuracy.BestForNavigation});
             const {latitude, longitude} = location.coords;
-            if(this.state.location == null) {
-                this.setState({location: {latitude, longitude}});
+            this.setState({location: {latitude, longitude}});
+            if (pressed) {
                 this.state.showLocation = true;
                 const newCamera = {
                     center: {latitude: latitude, longitude: longitude},
@@ -160,10 +159,6 @@ class HomeScreen extends React.Component {
                     altitude: 5
                 }
                 this._map.animateCamera(newCamera, {duration: 2000});
-            }
-            else
-            {
-                this.setState({location: {latitude, longitude}});
             }
         }
         else
@@ -243,7 +238,8 @@ class HomeScreen extends React.Component {
                     </Marker>}
 
                     {this.state.trace != null &&
-                    <Polyline coordinates={this.state.trace} strokeWidth={2} strokeColor={"#2FD175"}/>}
+                    // #2FD175
+                    <Polyline coordinates={this.state.trace} strokeWidth={2} strokeColor={"#4f6dde"}/>}
                 </MapView>
 
                 <View style={styles.roadselector}>
