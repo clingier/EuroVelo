@@ -44,7 +44,7 @@ const styles = StyleSheet.create({
         alignSelf: 'flex-start',
         position: 'absolute',
         top: 10,
-        margin: 20
+        marginTop: 40
     },
     bikelogo: {
         backgroundColor: '#2FD175',
