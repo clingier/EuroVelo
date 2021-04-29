@@ -40,7 +40,7 @@ export default class Screen extends Component {
                     'UPDATE Check_list SET Breakfast = ? WHERE Date = ?;',
                     [yes_or_no, date],
                     (tx, results) => {
-                        // alert(results.rowsAffected + " line(s) in the database were changed.");
+                        console.log(results.rowsAffected + " line(s) in the database were changed to " + yes_or_no + ".");
                     });
             });
         } else if (which_box === "Dinner") {
