@@ -151,6 +151,7 @@ class HomeScreen extends React.Component {
             this.setState({location: {latitude, longitude}});
             if (pressed) {
                 this.state.showLocation = true;
+                this.state.locked = false;
                 const newCamera = {
                     center: {latitude: latitude, longitude: longitude},
                     zoom: 15,
