@@ -83,10 +83,13 @@ export default class AppContainer extends React.Component {
             Asset.fromModule(require("./src/assets/traces_db.db")).uri,
             FileSystem.documentDirectory + 'SQLite/traces_db.db'
         );
-        await FileSystem.downloadAsync(
-            Asset.fromModule(require("./src/assets/organisation_db.db")).uri,
-            FileSystem.documentDirectory + 'SQLite/organisation_db.db'
-        );
-        return [SQLite.openDatabase('traces_db.db'), SQLite.openDatabase('organisation_db.db')];
+        if(!(await FileSystem.getInfoAsync(FileSystem.documentDirectory + 'SQLite/organisation_db.db')).exists)
+        {
+            await FileSystem.downloadAsync(
+                Asset.fromModule(require("./src/assets/organisation_db.db")).uri,
+                FileSystem.documentDirectory + 'SQLite/organisation_db.db'
+            );
+        }
+        return [SQLite.openDatabase('traces_db.db')];
     }
 }

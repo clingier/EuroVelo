@@ -2,17 +2,19 @@ import React, {Component} from 'react';
 import {Dimensions, Image, StyleSheet, Text, View, SafeAreaView} from 'react-native';
 import {CheckBox} from "react-native-elements";
 import pic from '../../assets/images/ev.jpg';
+import * as SQLite from 'expo-sqlite';
 
 
 export default class Screen extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            check: [],
-            organisation_db: props.organisation_db,
+            check: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
             date_codes: this.getDateCodes(),
-            first_time: 1
+            first_time: 1,
+            checkChanged: false
         };
+        this.updateDb.bind(this);
     }
 
     getDateCodes() {
@@ -32,93 +34,97 @@ export default class Screen extends Component {
 
     days = ["Today", "Tomorrow", "In two days"]
 
-    setCheck(which_box, yes_or_no, date) {
-        /* which box : "Breakfast" or "Dinner" or "Supper" or "Sleeping place" */
-        if (which_box === "Breakfast") {
-            this.state.organisation_db.transaction((tx) => {
-                tx.executeSql(
-                    'UPDATE Check_list SET Breakfast = ? WHERE Date = ?;',
-                    [yes_or_no, date],
-                    (tx, results) => {
-                        console.log(results.rowsAffected + " line(s) in the database were changed to " + yes_or_no + ".");
-                    });
-            });
-        } else if (which_box === "Dinner") {
-            this.state.organisation_db.transaction((tx) => {
-                tx.executeSql(
-                    'UPDATE Check_list SET Dinner = ? WHERE Date = ?;',
-                    [yes_or_no, date],
-                    (tx, results) => {
-                        // alert(results.rowsAffected + " line(s) in the database were changed.");
-                    });
-            });
-        } else if (which_box === "Supper") {
-            this.state.organisation_db.transaction((tx) => {
-                tx.executeSql(
-                    'UPDATE Check_list SET Supper = ? WHERE Date = ?;',
-                    [yes_or_no, date],
-                    (tx, results) => {
-                        // alert(results.rowsAffected + " line(s) in the database were changed.");
-                    });
-            });
-        } else if (which_box === "Sleeping place") {
-            this.state.organisation_db.transaction((tx) => {
-                tx.executeSql(
-                    'UPDATE Check_list SET "Sleeping place" = ? WHERE Date = ?;',
-                    [yes_or_no, date],
-                    (tx, results) => {
-                        // alert(results.rowsAffected + " line(s) in the database were changed.");
-                    });
-            });
-        }
+    // setCheck(which_box, yes_or_no, date) {
+    //     /* which box : "Breakfast" or "Dinner" or "Supper" or "Sleeping place" */
+    //     if (which_box === "Breakfast") {
+    //         this.state.organisation_db.transaction((tx) => {
+    //             tx.executeSql(
+    //                 'UPDATE Check_list SET Breakfast = ? WHERE Date = ?;',
+    //                 [yes_or_no, date],
+    //                 (tx, results) => {
+    //                     console.log(results.rowsAffected + " line(s) in the database were changed to " + yes_or_no + ".");
+    //                 });
+    //         });
+    //     } else if (which_box === "Dinner") {
+    //         this.state.organisation_db.transaction((tx) => {
+    //             tx.executeSql(
+    //                 'UPDATE Check_list SET Dinner = ? WHERE Date = ?;',
+    //                 [yes_or_no, date],
+    //                 (tx, results) => {
+    //                     // alert(results.rowsAffected + " line(s) in the database were changed.");
+    //                 });
+    //         });
+    //     } else if (which_box === "Supper") {
+    //         this.state.organisation_db.transaction((tx) => {
+    //             tx.executeSql(
+    //                 'UPDATE Check_list SET Supper = ? WHERE Date = ?;',
+    //                 [yes_or_no, date],
+    //                 (tx, results) => {
+    //                     // alert(results.rowsAffected + " line(s) in the database were changed.");
+    //                 });
+    //         });
+    //     } else if (which_box === "Sleeping place") {
+    //         this.state.organisation_db.transaction((tx) => {
+    //             tx.executeSql(
+    //                 'UPDATE Check_list SET "Sleeping place" = ? WHERE Date = ?;',
+    //                 [yes_or_no, date],
+    //                 (tx, results) => {
+    //                     // alert(results.rowsAffected + " line(s) in the database were changed.");
+    //                 });
+    //         });
+    //     }
 
-    }
+    // }
 
-    componentDidMount() {
+    componentDidMount = async () => {
         /* on va récupérer les checkboxes déjà cochées dans la db */
-        this.state.organisation_db.transaction((tx) => {
-            tx.executeSql(
-                'DELETE FROM Check_list WHERE Date < ?;',
-                [this.state.date_codes[0]],
-                (tx, results) => {
-                }
-            );
-        });
-
-        for (let i = 0; i < 3; i++) {
-            this.state.organisation_db.transaction((tx) => {
-                tx.executeSql(
-                    'SELECT * FROM Check_list WHERE Date == ?;',
-                    [this.state.date_codes[i]],
-                    (tx, results) => {
-                        if (results.rows.length > 0) {
-                            let res = results.rows.item(0);
-                            const my_check = this.state.check;
-                            my_check[4 * i] = res["Breakfast"];
-                            my_check[4 * i + 1] = res["Dinner"];
-                            my_check[4 * i + 2] = res["Supper"];
-                            my_check[4 * i + 3] = res["Sleeping place"];
-
-
-                            this.setState({check: my_check})
-                        } else {
-                            this.state.organisation_db.transaction((tx) => {
-                                tx.executeSql(
-                                    'INSERT INTO "Check_list"\n' +
-                                    '("Breakfast", "Dinner", "Supper", "Sleeping place", "Date")\n' +
-                                    'VALUES (0, 0, 0, 0, ?);',
-                                    [this.state.date_codes[i]],
-                                    (tx, results) => {
-                                    }
-                                );
-                            });
+        const db = SQLite.openDatabase('organisation_db.db')
+        try {
+            await new Promise((resolve, reject) => {
+                db.transaction((tx) => {
+                    tx.executeSql(
+                        'DELETE FROM Check_list WHERE Date < ?;',
+                        [this.state.date_codes[0]],
+                        (tx, results) => {
                         }
+                    );
+                    for (let i = 0; i < 3; i++) {
+                        tx.executeSql(
+                            'SELECT * FROM Check_list WHERE Date == ?;',
+                            [this.state.date_codes[i]],
+                            (tx, results) => {
+                                if (results.rows.length > 0) {
+                                    let res = results.rows.item(0);
+                                    this.state.check[4 * i] = res["Breakfast"];
+                                    this.state.check[4 * i + 1] = res["Dinner"];
+                                    this.state.check[4 * i + 2] = res["Supper"];
+                                    this.state.check[4 * i + 3] = res["Sleeping place"];
+                                    this.setState({check: this.state.check, checkChanged: false})
+                                } else {
+                                    this.state.check[4 * i] = 0;
+                                    this.state.check[4 * i + 1] = 0;
+                                    this.state.check[4 * i + 2] = 0;
+                                    this.state.check[4 * i + 3] = 0;
+                                    this.state.checkChanged = false;
+                                }
+                            }
+                        );
                     }
-                );
-            });
+                },
+                reject,
+                resolve);
+            })
+        } catch(error) {
+            console.error(error)
+        } finally {
+            if(db != null)
+                db._db.close();
+            console.log("Component Did mount here is the state:")
+            console.log(this.state.check)
         }
     }
 
+    
     // on crée les checkboxes
     Buttons() {
         const buttons = [];
@@ -135,10 +141,9 @@ export default class Screen extends Component {
                                 checked={this.state.check[4 * i]} // 4*i pour atteindre la bonne checkbox
                                 textStyle={styles.textButton}
                                 onPress={() => {
-                                    let my_check = this.state.check;
-                                    my_check[4 * i] = !my_check[4 * i];
-                                    this.setState({check: my_check})
-                                    this.setCheck("Breakfast", my_check[4 * i], this.state.date_codes[i]);
+                                    let check = this.state.check;
+                                    check[4 * i] = (check[4 * i]) ? 0 : 1;
+                                    this.setState({check: check, checkChanged: true});
                                 }}
                             />
                         </View>
@@ -149,16 +154,13 @@ export default class Screen extends Component {
                                 checked={this.state.check[4 * i + 1]}
                                 textStyle={styles.textButton}
                                 onPress={() => {
-                                    let my_check = this.state.check;
-                                    my_check[4 * i + 1] = !my_check[4 * i + 1];
-                                    this.setState({check: my_check});
-                                    this.setCheck("Dinner", my_check[4 * i + 1], this.state.date_codes[i]);
+                                    let check = this.state.check;
+                                    check[4 * i + 1] = (check[4 * i + 1]) ? 0 : 1;
+                                    this.setState({check: check, checkChanged: true});
                                 }}
                             />
                         </View>
                     </View>
-
-
                     <View style={styles.row}>
                         <View style={styles.checkbox}>
                             <CheckBox
@@ -167,10 +169,9 @@ export default class Screen extends Component {
                                 checked={this.state.check[4 * i + 2]} // 4*i pour atteindre la bonne checkbox
                                 textStyle={styles.textButton}
                                 onPress={() => {
-                                    let my_check = this.state.check;
-                                    my_check[4 * i + 2] = !my_check[4 * i + 2];
-                                    this.setState({check: my_check})
-                                    this.setCheck("Supper", my_check[4 * i + 2], this.state.date_codes[i]);
+                                    let check = this.state.check;
+                                    check[4 * i + 2] = (check[4 * i + 2]) ? 0 : 1;
+                                    this.setState({check: check, checkChanged: true});
                                 }}
                             />
                         </View>
@@ -182,10 +183,9 @@ export default class Screen extends Component {
                                 containerStyle={styles.Button}
                                 textStyle={styles.textButton}
                                 onPress={() => {
-                                    let my_check = this.state.check;
-                                    my_check[4 * i + 3] = !my_check[4 * i + 3];
-                                    this.setState({check: my_check});
-                                    this.setCheck("Sleeping place", my_check[4 * i + 3], this.state.date_codes[i]);
+                                    let check = this.state.check;
+                                    check[4 * i + 3] = (check[4 * i + 3]) ? 0 : 1;
+                                    this.setState({check: check, checkChanged: true});
                                 }}
                             />
                         </View>
@@ -193,7 +193,7 @@ export default class Screen extends Component {
                 </View>
             );
         }
-        //
+        
         return buttons;
     };
 
@@ -214,9 +214,41 @@ export default class Screen extends Component {
 
         );
     }
+
+    updateDb = async () => {
+        if(this.state.checkChanged) {
+            console.log("updating db")
+            const db = SQLite.openDatabase('organisation_db.db')
+            try {
+                await new Promise((resolve, reject) => {
+                    db.transaction((tx) => {
+                            for(let i=0; i < 3; i++){
+                                tx.executeSql(
+                                    'replace into Check_list(Breakfast, Dinner, Supper, "Sleeping place", "Date") values (?, ?, ?, ?, ?)',
+                                    this.state.check.slice(4 * i, 4 * i + 4).concat([this.state.date_codes[i]]),
+                                    (tx, results) => {
+                                    },
+                                    (tx, error) => console.warn(error)
+                                );
+                            }
+                    },
+                    reject,
+                    resolve)
+                });
+            } catch (err) {
+                console.log(err);
+            } finally {
+                if(db != null)
+                    db._db.close();
+            }
+            this.state.checkChanged = false;
+        }
+    }
+
+    componentDidUpdate = () => {
+        this.updateDb();
+    }
 }
-//                    {Buttons()}
-//                        <Image source={pic} style={styles.image} resizeMode={'cover'}/>
 const styles = StyleSheet.create({
     container: {
         flex: 1,
