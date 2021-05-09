@@ -1,5 +1,6 @@
 import React from 'react';
 import {StyleSheet, View, Dimensions, Alert, TouchableOpacity, Text, TouchableNativeFeedbackBase} from 'react-native';
+import {activateKeepAwake, deactivateKeepAwake} from 'expo-keep-awake';
 import RoadSelector from './RoadSelector';
 import MapView, {Polyline, Marker} from 'react-native-maps';
 import Spinner from 'react-native-loading-spinner-overlay';
@@ -169,14 +170,19 @@ class HomeScreen extends React.Component {
     followPerson = async () => {
         if(this.state.locked){
             this.setState({locked: false});
+            deactivateKeepAwake();
         }
         else
         {
+            activateKeepAwake();
             const {status} = await Permissions.getAsync(Permissions.LOCATION);
             if(status === 'granted')
             {
                 this.setState({locked: true, showLocation: true})
-                Location.watchPositionAsync( {accuracy: Location.Accuracy.BestForNavigation , timeInterval:200 } , (loc) =>  this.cameraSet(loc));
+                Location.watchPositionAsync({
+                    accuracy: Location.Accuracy.BestForNavigation,
+                    timeInterval: 200
+                }, (loc) => this.cameraSet(loc));
             }
             else
                 this.getLocationPermission()
@@ -203,6 +209,7 @@ class HomeScreen extends React.Component {
         if(this.state.locked)
         {
             this.setState({locked: false})
+            deactivateKeepAwake();
         }
     }
 
